@@ -12,6 +12,10 @@
         content="Nice Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
     <title>Nice Admin Lite Template by WrapPixel</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <link rel="canonical" href="https://www.wrappixel.com/templates/niceadmin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
@@ -23,6 +27,8 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 </head>
 
 <body>
@@ -216,7 +222,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">Basic Table</h4>
+                        <h4 class="page-title">Add Drug</h4>
                     </div>
                     <div class="col-7 align-self-center">
                         <div class="d-flex align-items-center justify-content-end">
@@ -225,7 +231,7 @@
                                     <li class="breadcrumb-item">
                                         <a href="#">Home</a>
                                     </li>
-                                    <li class="breadcrumb-item active" aria-current="page">Basic Table</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Add Drug</li>
                                 </ol>
                             </nav>
                         </div>
@@ -242,112 +248,110 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+                <!-- Row -->
                 <div class="row">
-                    <div class="col-12">
-                        <div class="card card-body">
-                            <h4 class="card-title">Default Forms</h4>
-                            <h5 class="card-subtitle"> All bootstrap element classies </h5>
-                            <form class="form-horizontal mt-4">
-                                <div class="form-group">
-                                    <label>Default Text <span class="help"> e.g. "George deo"</span></label>
-                                    <input type="text" class="form-control" value="George deo...">
-                                </div>
-                                <div class="form-group">
-                                    <label for="example-email">Email <span class="help"> e.g.
-                                            "example@gmail.com"</span></label>
-                                    <input type="email" id="example-email" name="example-email" class="form-control"
-                                        placeholder="Email">
-                                </div>
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input type="password" class="form-control" value="password">
-                                </div>
-                                <div class="form-group">
-                                    <label>Placeholder</label>
-                                    <input type="text" class="form-control" placeholder="placeholder">
-                                </div>
-                                <div class="form-group">
-                                    <label>Text area</label>
-                                    <textarea class="form-control" rows="5"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label>Read only input</label>
-                                    <input class="form-control" type="text" placeholder="Readonly input here…" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <fieldset disabled>
-                                        <label for="disabledTextInput">Disabled input</label>
-                                        <input type="text" id="disabledTextInput" class="form-control"
-                                            placeholder="Disabled input">
-                                    </fieldset>
-                                </div>
-                                <div class="form-group row pt-3">
-                                    <div class="col-sm-4">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="customCheck1">
-                                            <label class="form-check-label mb-0" for="customCheck1">Check this custom
-                                                checkbox</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="customCheck2">
-                                            <label class="form-check-label mb-0" for="customCheck2">Check this custom
-                                                checkbox</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="customCheck3">
-                                            <label class="form-check-label mb-0" for="customCheck3">Check this custom
-                                                checkbox</label>
+                    <!-- Column -->
+                    <!-- <div class="col-lg-4 col-xlg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <center class="mt-4"> <img src="../../assets/images/users/5.jpg"
+                                        class="rounded-circle" width="150" />
+                                    <h4 class="card-title mt-2">Hanna Gover</h4>
+                                    <h6 class="card-subtitle">Accoubts Manager Amix corp</h6>
+                                    <div class="row text-center justify-content-md-center">
+                                        <div class="col-4"><a href="javascript:void(0)" class="link"><i
+                                                    class="mdi mdi-account-network"></i>
+                                                <font class="font-medium">254</font>
+                                            </a></div>
+                                        <div class="col-4"><a href="javascript:void(0)" class="link"><i
+                                                    class="mdi mdi-camera"></i>
+                                                <font class="font-medium">54</font>
+                                            </a></div>
+                                    </div>
+                                </center>
+                            </div>
+                            <div>
+                                <hr>
+                            </div>
+                            <div class="card-body"> <small class="text-muted">Email address </small>
+                                <h6>hannagover@gmail.com</h6> <small class="text-muted pt-4 db">Phone</small>
+                                <h6>+91 654 784 547</h6> <small class="text-muted pt-4 db">Address</small>
+                                <h6>71 Pilgrim Avenue Chevy Chase, MD 20815</h6>
+                                <div class="map-box">
+                                    <iframe
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d470029.1604841957!2d72.29955005258641!3d23.019996818380896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C+Gujarat!5e0!3m2!1sen!2sin!4v1493204785508"
+                                        width="100%" height="150" frameborder="0" style="border:0"
+                                        allowfullscreen></iframe>
+                                </div> <small class="text-muted pt-4 db">Social Profile</small>
+                                <br />
+                                <button class="btn btn-circle btn-secondary"><i class="mdi mdi-facebook"></i></button>
+                                <button class="btn btn-circle btn-secondary"><i class="mdi mdi-twitter"></i></button>
+                                <button class="btn btn-circle btn-secondary"><i
+                                        class="mdi mdi-youtube-play"></i></button>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- Column -->
+                    <!-- Column -->
+                    <div class="col-lg-12 col-xlg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form-horizontal form-material mx-2">
+                                    <div class="form-group">
+                                        <label class="col-md-12">Name</label>
+                                        <div class="col-md-12">
+                                            <input type="text" placeholder="Drug Name..."
+                                                class="form-control form-control-line">
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-check">
-                                            <input type="radio" id="customRadio1" name="customRadio"
-                                                class="form-check-input">
-                                            <label class="form-check-label mb-0" for="customRadio1">Toggle this custom
-                                                radio</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" id="customRadio2" name="customRadio"
-                                                class="form-check-input">
-                                            <label class="form-check-label mb-0" for="customRadio2">Toggle this custom
-                                                radio</label>
+                                    <div class="form-group">
+                                        <label class="col-md-12">Dose</label>
+                                        <div class="col-md-12">
+                                            <input type="text" placeholder="Drug Dose..."
+                                                class="form-control form-control-line">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Input Select</label>
-                                    <select class="form-select shadow-none col-12" id="inlineFormCustomSelect">
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Default file upload</label>
-                                    <input type="file" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Custom File upload</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Upload</span>
-                                        </div>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="inputGroupFile01">
-                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+
+                                    <div class="form-group">
+                                        <label class="col-md-12">Count</label>
+                                        <div class="col-md-12">
+                                            <input type="text" placeholder="Drug Count..."
+                                                class="form-control form-control-line">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Helping text</label>
-                                    <input type="text" class="form-control" placeholder="Helping text">
-                                    <span class="help-block"><small>A block of help text that breaks onto a new line and
-                                            may extend beyond one line.</small></span> </div>
-                            </form>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea class="form-control" rows="5"></textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Expire Date</label>
+                                        <input id="datepicker" width="276" />
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-sm-12">Select Drug Category</label>
+                                        <div class="col-sm-12">
+                                            <select class="form-select shadow-none form-control-line">
+                                                <option>Sleeping Drugs</option>
+                                                <option>Vitamins</option>
+                                                <option>Cold Cures</option>
+                                                <option>Antibiotics</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <button class="btn btn-success text-white">Add Drug</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
+                    <!-- Column -->
                 </div>
+                <!-- Row -->
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -366,8 +370,8 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center">
-                All Rights Reserved by Nice admin. Designed and Developed by
-                <a href="https://www.wrappixel.com">WrapPixel</a>.
+                <!-- All Rights Reserved by Nice admin. Designed and Developed by
+                <a href="https://www.wrappixel.com">WrapPixel</a>. -->
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
@@ -383,6 +387,11 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+    <script>
+        $('#datepicker').datepicker({
+            uiLibrary: 'bootstrap5'
+        });
+    </script>
     <script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="../../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

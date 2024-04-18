@@ -1,3 +1,7 @@
+<?php 
+
+?>
+
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -12,6 +16,7 @@
         content="Nice Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
     <title>Nice Admin Lite Template by WrapPixel</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
     <link rel="canonical" href="https://www.wrappixel.com/templates/niceadmin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
@@ -216,7 +221,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">Profile</h4>
+                        <h4 class="page-title">Add User</h4>
                     </div>
                     <div class="col-7 align-self-center">
                         <div class="d-flex align-items-center justify-content-end">
@@ -225,7 +230,7 @@
                                     <li class="breadcrumb-item">
                                         <a href="#">Home</a>
                                     </li>
-                                    <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Add User</li>
                                 </ol>
                             </nav>
                         </div>
@@ -290,34 +295,47 @@
                     <div class="col-lg-12 col-xlg-12">
                         <div class="card">
                             <div class="card-body">
-                                <form class="form-horizontal form-material mx-2">
+                                <form class="form-horizontal form-material mx-2" action="../../php/signin.php" method="post">
                                     <div class="form-group">
                                         <label class="col-md-12">Full Name</label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="Name and Lastname..."
-                                                class="form-control form-control-line">
+                                            <input type="text" name="fullName" placeholder="Name and Lastname..." class="form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">User Name</label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="Username..."
-                                                class="form-control form-control-line">
+                                            <input type="text" name="userName" placeholder="Username..." class="form-control form-control-line">
                                         </div>
                                     </div>
-                                
+
                                     <div class="form-group">
                                         <label class="col-md-12">Password</label>
-                                        <div class="col-md-12">
-                                            <input type="password" value=""
-                                                class="form-control form-control-line">
+                                        <div class="col-md-12 d-flex">
+                                            <input type="password" value="" class="form-control form-control-line" name="password" id="myPass">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" onclick="password_show_hide();">
+                                                  <i class="me-2 mdi mdi-eye" id="show_eye_pass"></i>
+                                                  <i class="me-2 mdi mdi-eye-off d-none" id="hide_eye_pass"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    
+                                    <div class="form-group">
+                                        <label class="col-md-12">Repeat Password</label>
+                                        <div class="col-md-12  d-flex">
+                                            <input type="password" value="" class="form-control form-control-line" name="repeatPassword" id="myrePass">
+                                            <span class="input-group-text" onclick="repassword_show_hide();">
+                                                <i class="me-2 mdi mdi-eye" id="show_eye_repass"></i>
+                                                <i class="me-2 mdi mdi-eye-off d-none" id="hide_eye_repass"></i>
+                                              </span>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
                                         <label class="col-sm-12">Select Role</label>
                                         <div class="col-sm-12">
-                                            <select class="form-select shadow-none form-control-line">
+                                            <select class="form-select shadow-none form-control-line" name="role">
                                                 <option>Admin</option>
                                                 <option>Analizer</option>
                                                 <option>Employee</option>
@@ -326,7 +344,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <button class="btn btn-success text-white">Update</button>
+                                            <button name="submitBtn" class="btn btn-success text-white">Add User</button>
                                         </div>
                                     </div>
                                 </form>
@@ -371,6 +389,7 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+  
     <script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="../../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -382,6 +401,38 @@
     <script src="../../dist/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="../../dist/js/custom.min.js"></script>
+    <script>
+        function password_show_hide() {
+            var x = document.getElementById("myPass");
+            var show_eye_pass = document.getElementById("show_eye_pass");
+            var hide_eye_pass = document.getElementById("hide_eye_pass");
+            hide_eye_pass.classList.remove("d-none");
+            if (x.type === "myPass") {
+                x.type = "text";
+                show_eye_pass.style.display = "none";
+                hide_eye_pass.style.display = "block";
+            } else {
+                x.type = "myPass";
+                show_eye_pass.style.display = "block";
+                hide_eye_pass.style.display = "none";
+            }
+        }
+        function repassword_show_hide() {
+            var x = document.getElementById("myrePass");
+            var show_eye_repass = document.getElementById("show_eye_repass");
+            var hide_eye_repass = document.getElementById("hide_eye_repass");
+            hide_eye_repass.classList.remove("d-none");
+            if (x.type === "myrePass") {
+                x.type = "text";
+                show_eye_repass.style.display = "none";
+                hide_eye_repass.style.display = "block";
+            } else {
+                x.type = "myrePass";
+                show_eye_repass.style.display = "block";
+                hide_eye_repass.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>
