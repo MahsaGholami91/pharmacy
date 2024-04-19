@@ -57,28 +57,22 @@ function uidExists($conn, $userName) {
 }
 
 function createUser($conn, $fullName, $userName, $password, $role) {
-    $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO `users` (`fullname`, `username`, `password`, `roleId`) VALUES ('".$fullName."','".$userName."' , '".$hashedPwd."',1);";
-    header("location: ../pages-add-user.php?error=none");
+
+    $sql = "INSERT INTO `users` (`fullname`, `username`, `password`, `roleId`) VALUES (? , ? ,? ,?);";
+    $stmt = mysqli_stmt_init($conn);
+   
+    if(!mysqli_stmt_prepare($stmt,$sql) ){
+    header("location: ../nice-html/ltr/pages-add-user.php?error=stmtfailed");
     exit();
+    }
+    $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+     mysqli_stmt_bind_param($stmt,"sssi",$fullName, $userName, $hashedPwd, $role);
+
+     mysqli_stmt_execute($stmt);
+     mysqli_stmt_close($stmt);
+     header("location: ../nice-html/ltr/pages-add-user.php?error=none");
+    exit();
+
 }
-
-// function emptyInputLogin($username, $pwd) {
-//     $result=true;
-//     if( empty($username) || empty($pwd) ){
-//         $result = true;
-//     }
-//     else {
-//         $result =false;
-//     }
-//     return $result;
-// }
-
-
-// function getUser($conn ,$email){
-//     $sql = "SELECT * FROM `users` WHERE `email` = '$email'";
-//     $result = mysqli_query($conn , $sql);
-//     return mysqli_fetch_assoc($result);
-// }
 
 ?>

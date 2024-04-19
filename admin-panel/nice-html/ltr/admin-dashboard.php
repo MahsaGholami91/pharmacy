@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -12,35 +11,36 @@
         content="Nice Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
     <title>Nice Admin Lite Template by WrapPixel</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
     <link rel="canonical" href="https://www.wrappixel.com/templates/niceadmin-lite/" />
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
+    <link href="../../assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
     <link href="../../dist/css/style.min.css" rel="stylesheet">
-
+    
 </head>
 
 <body>
-
+    
     <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
         </div>
     </div>
-
+   
     <div id="main-wrapper" data-navbarbg="skin6" data-theme="light" data-layout="vertical" data-sidebartype="full"
         data-boxed-layout="full">
-
+        
         <header class="topbar" data-navbarbg="skin6">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
                 <div class="navbar-header" data-logobg="skin5">
                     <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
                         <i class="ti-menu ti-close"></i>
                     </a>
-
+                   
                     <div class="navbar-brand">
-                        <a href="employee-dashboard.php" class="logo">
+                        <a href="admin-dashboard.php" class="logo">
                             <b class="logo-icon">
+                                
                                 <img src="../../assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
                                 <img src="../../assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
                             </b>
@@ -51,12 +51,14 @@
                             </span>
                         </a>
                     </div>
-
+                    
                     
                 </div>
-
+                
                 <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin6">
+                    
                     <ul class="navbar-nav float-start me-auto">
+                        
                         <li class="nav-item search-box">
                             <a class="nav-link waves-effect waves-dark" href="javascript:void(0)">
                                 <div class="d-flex align-items-center">
@@ -74,27 +76,26 @@
                             </form>
                         </li>
                     </ul>
-           
+                    
                     <ul class="navbar-nav float-end">
+                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="../../assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user me-1 ms-1"></i>
+                                <a class="dropdown-item" href="pages-profile.html"><i class="ti-user me-1 ms-1"></i>
                                     My Profile</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet me-1 ms-1"></i>
-                                    My Balance</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email me-1 ms-1"></i>
-                                    Inbox</a>
+                                <a class="dropdown-item" href="../../../login-page/login.php"><i class="ti-user me-1 ms-1"></i>
+                                Log Out</a>
                             </ul>
                         </li>
-
+                        
                     </ul>
                 </div>
             </nav>
         </header>
-
+        
         <aside class="left-sidebar" data-sidebarbg="skin5">
             <div class="scroll-sidebar">
                 <nav class="sidebar-nav">
@@ -133,12 +134,13 @@
                 </nav>
             </div>
         </aside>
-
+       
         <div class="page-wrapper">
+           
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">Add User</h4>
+                        <h4 class="page-title">Dashboard</h4>
                     </div>
                     <div class="col-7 align-self-center">
                         <div class="d-flex align-items-center justify-content-end">
@@ -147,118 +149,87 @@
                                     <li class="breadcrumb-item">
                                         <a href="#">Home</a>
                                     </li>
-                                    <li class="breadcrumb-item active" aria-current="page">Add User</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
                                 </ol>
                             </nav>
                         </div>
                     </div>
                 </div>
             </div>
-
+            
             <div class="container-fluid">
+                
                 <div class="row">
                     <div class="col-lg-12 col-xlg-12">
                         <div class="card">
                             <div class="card-body">
-                                <form class="form-horizontal form-material mx-2" action="../../php/signin.php" method="post">
-                                    <div class="form-group">
-                                        <label class="col-md-12">Full Name</label>
-                                        <div class="col-md-12">
-                                            <input type="text" name="fullName" placeholder="Name and Lastname..." class="form-control form-control-line">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12">User Name</label>
-                                        <div class="col-md-12">
-                                            <input type="text" name="userName" placeholder="Username..." class="form-control form-control-line">
-                                        </div>
-                                    </div>
+                                <h4 class="card-title">Drugs List</h4>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">NAME</th>
+                                            <th class="border-top-0">Dose</th>
+                                            <th class="border-top-0">Count</th>
+                                            <th class="border-top-0">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="txt-oflo">Elite admin</td>
+                                            <td class="txt-oflo">18</td>
+                                            <td><span class="font-medium">24</span></td>
+                                            <td style="display: flex;gap: 10px;">
+                                                <form action="drugUpdate.php" method="POST">
+                                                    <button type="submit" class="btn btn-success text-white">Update</button>
+                                                </form>
+                                                <form action="drugDelete.php" method="POST">
+                                                    <button type="submit" class="btn btn-danger text-white">Delete</button>
+                                                </form>
+                                            </td>
+                                           
+                                        </tr>
+                                        <tr>
 
-                                    <div class="form-group">
-                                        <label class="col-md-12">Password</label>
-                                        <div class="col-md-12 d-flex">
-                                            <input type="password" value="" class="form-control form-control-line" name="password" id="myPass">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" onclick="password_show_hide();">
-                                                  <i class="me-2 mdi mdi-eye" id="show_eye_pass"></i>
-                                                  <i class="me-2 mdi mdi-eye-off d-none" id="hide_eye_pass"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12">Repeat Password</label>
-                                        <div class="col-md-12  d-flex">
-                                            <input type="password" value="" class="form-control form-control-line" name="repeatPassword" id="myrePass">
-                                            <span class="input-group-text" onclick="repassword_show_hide();">
-                                                <i class="me-2 mdi mdi-eye" id="show_eye_repass"></i>
-                                                <i class="me-2 mdi mdi-eye-off d-none" id="hide_eye_repass"></i>
-                                              </span>
-                                        </div>
-                                    </div>
+                                            <td class="txt-oflo">Real Homes WP Theme</td>
+                                            <td class="txt-oflo">19</td>
+                                            <td><span class="font-medium">1250</span></td>
+                                            <td style="display: flex;gap: 10px;">
+                                                <form action="drugUpdate.php" method="POST">
+                                                    <button type="submit" class="btn btn-success text-white">Update</button>
+                                                </form>
+                                                <form action="drugDelete.php" method="POST">
+                                                    <button type="submit" class="btn btn-danger text-white">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <tr>
 
-                                    <div class="form-group">
-                                        <label class="col-sm-12">Select Role</label>
-                                        <div class="col-sm-12">
-                                            <?php 
-                                                require_once "../../includes/db.php";
-
-                                                ?>
-                                        <select name="role" >
-                                            <option value="Select Role" selected>Select Role</option>
-                                            <?php 
-                                                $roles = "SELECT * FROM `role`";
-                        
-                                                $result = mysqli_query($conn,$roles);
-                                                while($row = mysqli_fetch_array($result)){
-                                            ?>
-                                            <option value="<?php  echo $row['id'] ?>"><?php  echo $row['name']?></option>
-                                                <?php   } ?>
-                                        </select>
-
-
-
-                                         
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <button name="submitBtn" class="btn btn-success text-white">Add User</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                            <td class="txt-oflo">Ample Admin</td>
+                                            <td class="txt-oflo">19</td>
+                                            <td><span class="font-medium">1250</span></td>
+                                            <td style="display: flex;gap: 10px;">
+                                                <form action="drugUpdate.php" method="POST">
+                                                    <button type="submit" class="btn btn-success text-white">Update</button>
+                                                </form>
+                                                <form action="drugDelete.php" method="POST">
+                                                    <button type="submit" class="btn btn-danger text-white">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        
+                                       
+                                        
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <?php
-                        if (isset($_GET["error"])) {
-                            if ($_GET["error"] == "emptyinput") {
-                                echo "<p>Fill in all fiels!<p>";
-                            }
-                            else if ($_GET["error"] == "invalidUid") {
-                                echo "<p>Choose a proper username!<p>";
-                            }
-                            else if ($_GET["error"] == "invalidEmail") {
-                                echo "<p>Choose a proper email!<p>";
-                            }
-                            else if ($_GET["error"] == "passworddontmatch") {
-                                echo "<p>Passwors doesnt match!<p>";
-                            }
-                            else if ($_GET["error"] == "usernametaken") {
-                                echo "<p>Username allready taken!<p>";
-                            }
-                            else if ($_GET["error"] == "stmtfailed") {
-                                echo "<p>Something went wring, try again!<p>";
-                            }
-                            else if ($_GET["error"] == "none") {
-                                echo "<p>You have signed in!<p>";
-                            }
-                        }
-                    ?>
                 </div>
                 
             </div>
-           
+            
             <footer class="footer text-center">
                 
             </footer>
@@ -267,45 +238,15 @@
         
     </div>
     
-  
     <script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="../../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/extra-libs/sparkline/sparkline.js"></script>
     <script src="../../dist/js/waves.js"></script>
     <script src="../../dist/js/sidebarmenu.js"></script>
     <script src="../../dist/js/custom.min.js"></script>
-    <script>
-        function password_show_hide() {
-            var x = document.getElementById("myPass");
-            var show_eye_pass = document.getElementById("show_eye_pass");
-            var hide_eye_pass = document.getElementById("hide_eye_pass");
-            hide_eye_pass.classList.remove("d-none");
-            if (x.type === "myPass") {
-                x.type = "text";
-                show_eye_pass.style.display = "none";
-                hide_eye_pass.style.display = "block";
-            } else {
-                x.type = "myPass";
-                show_eye_pass.style.display = "block";
-                hide_eye_pass.style.display = "none";
-            }
-        }
-        function repassword_show_hide() {
-            var x = document.getElementById("myrePass");
-            var show_eye_repass = document.getElementById("show_eye_repass");
-            var hide_eye_repass = document.getElementById("hide_eye_repass");
-            hide_eye_repass.classList.remove("d-none");
-            if (x.type === "myrePass") {
-                x.type = "text";
-                show_eye_repass.style.display = "none";
-                hide_eye_repass.style.display = "block";
-            } else {
-                x.type = "myrePass";
-                show_eye_repass.style.display = "block";
-                hide_eye_repass.style.display = "none";
-            }
-        }
-    </script>
+    <script src="../../assets/libs/chartist/dist/chartist.min.js"></script>
+    <script src="../../assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="../../dist/js/pages/dashboards/dashboard1.js"></script>
 </body>
 
 </html>
