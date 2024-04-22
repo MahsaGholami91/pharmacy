@@ -106,11 +106,7 @@
                                 <i class="mdi mdi-av-timer"></i>
                                 <span class="hide-menu">Dashboard</span>
                             </a>
-                        </li>
-                        
-                        
-                        
-                        
+                        </li>                    
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-add-Text.php"
                                 aria-expanded="false">

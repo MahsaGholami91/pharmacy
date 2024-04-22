@@ -122,7 +122,7 @@
                         </li>
                        
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-add-Text.html"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-add-Text.php"
                                 aria-expanded="false">
                                 <i class="mdi mdi-file"></i>
                                 <span class="hide-menu">Analyze Text</span>
