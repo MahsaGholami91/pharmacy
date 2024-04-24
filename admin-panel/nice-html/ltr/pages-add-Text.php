@@ -34,7 +34,6 @@
                                 <img src="../../assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
                                 <img src="../../assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
                             </b>
-
                             <span class="logo-text">
                                 <img src="../../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
                                 <img src="../../assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
