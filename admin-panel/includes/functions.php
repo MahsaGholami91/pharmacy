@@ -90,48 +90,54 @@ function createUser($conn, $fullName, $userName, $password, $role) {
 
 function addOrUpdateDrug($conn, $drugName, $drugDose, $drugCount, $drugDesc, $drugExp, $drugCat) {
     $sql = "SELECT * FROM `drugs` WHERE `name` = ? AND `dose` = ? AND `expireDate` = ? AND `drugCat` = ?";
-    
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../pages-add-drug.php?error=stmtfailed");
         exit();
     }
     mysqli_stmt_bind_param($stmt, "siss", $drugName, $drugDose, $drugExp, $drugCat);
-   
     mysqli_stmt_execute($stmt);
     mysqli_stmt_store_result($stmt);
     $rowCount = mysqli_stmt_num_rows($stmt);
     mysqli_stmt_close($stmt);
-
     if ($rowCount > 0) {
-        // Drug exists, update its count
         $sql = "UPDATE `drugs` SET `drugCount` = `drugCount` + ? WHERE `name` = ? AND `dose` = ? AND `expireDate` = ? AND `drugCat` = ?";
         $stmt = mysqli_stmt_init($conn);
-       
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             header("location: ../pages-add-drug.php?error=stmtfailed");
             exit();
         }
-
         mysqli_stmt_bind_param($stmt, "isiss", $drugCount, $drugName, $drugDose, $drugExp, $drugCat);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
-        return true; // Indicate that drug was updated
+        return true; 
     } else {
-        // Drug doesn't exist, insert it
         $sql = "INSERT INTO drugs (`name`, `dose`, `expireDate`, `drugCat`, `drugCount`, `description`) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_stmt_init($conn);
-
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             header("location: ../pages-add-drug.php?error=stmtfailed");
             exit();
         }
-
         mysqli_stmt_bind_param($stmt, "sisiis", $drugName, $drugDose, $drugExp, $drugCat, $drugCount, $drugDesc);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
-        return true; // Indicate that drug was inserted
+        return true; 
     }
 }
 
+function addText($conn, $beforeAna, $afterAna,$username) {
+    $sql = "INSERT INTO `text` (`text`, `afterAnalyze`, `userId`) VALUES (? , ? ,?);";
+    $stmt = mysqli_stmt_init($conn);
+   
+    if(!mysqli_stmt_prepare($stmt,$sql) ){
+    header("location: ../nice-html/ltr/pages-add-user.php?error=stmtfailed");
+    exit();
+    }
+     mysqli_stmt_bind_param($stmt,"tts",$beforeAna, $afterAna,$username);
+
+     mysqli_stmt_execute($stmt);
+     mysqli_stmt_close($stmt);
+     header("location: ../nice-html/ltr/pages-add-user.php?error=none");
+    exit();
+}
 ?>

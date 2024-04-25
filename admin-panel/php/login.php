@@ -11,17 +11,22 @@ if(isset($_POST["submit"])) {
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
         $check = password_verify($password , $row['password']);
+        $userid = $row['id'];
+        $userRoleid = $row['roleId'];
         if($check){
             $_SESSION['username'] = $username;
+            $_SESSION['id'] = $userid;
+            $_SESSION['roleId'] = $userRoleid;
           
-            switch ($row['roleId']) {
-                case $row['roleId'] = 1:
+
+            switch ($userRoleid) {
+                case $userRoleid = 1:
                     header("location: ../nice-html/ltr/admin-dashboard.php");
                     break;
-                case $row['roleId'] = 2:
+                case $userRoleid = 2:
                     header("location: ../nice-html/ltr/employee-dashboard.php");
                     break;
-                case $row['roleId'] = 3:
+                case $userRoleid = 3:
                     header("location: ../nice-html/ltr/analizer-dashboard.php");
                     break;
                 default:
