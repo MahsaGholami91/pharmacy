@@ -26,70 +26,89 @@
           
             <div class="container-fluid">           
                 <div class="row">
-                    <div class="col-lg-12 col-xlg-12">
+                    <!-- <div class="col-lg-12 col-xlg-12">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Drugs List</h4>
                             </div>
                             <div class="table-responsive">
+                                <?php 
+                                    // require_once "../../includes/db.php";
+                                    // $recordsPerPage = 5;
+
+                                    // $page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+                                    // $offset = ($page - 1) * $recordsPerPage;
+
+                                    // $sql = "SELECT * FROM drugs LIMIT $offset, $recordsPerPage";
+                                    // $result = mysqli_query($conn, $sql);
+
+                                    // if (!$result) {
+                                    //     die("Query failed");
+                                    // }
+
+                                ?>
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th class="border-top-0">NAME</th>
+                                            <th class="border-top-0">Id</th>
+                                            <th class="border-top-0">Name</th>
                                             <th class="border-top-0">Dose</th>
                                             <th class="border-top-0">Count</th>
+                                            <th class="border-top-0">Expire Date</th>
                                             <th class="border-top-0">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="txt-oflo">Elite admin</td>
-                                            <td class="txt-oflo">18</td>
-                                            <td><span class="font-medium">24</span></td>
-                                            <td style="display: flex;gap: 10px;">
-                                                <form action="drugUpdate.php" method="POST">
-                                                    <button type="submit" class="btn btn-success text-white">Update</button>
-                                                </form>
-                                                <form action="drugDelete.php" method="POST">
-                                                    <button type="submit" class="btn btn-danger text-white">Delete</button>
-                                                </form>
-                                            </td>
-                                           
-                                        </tr>
-                                        <tr>
-
-                                            <td class="txt-oflo">Real Homes WP Theme</td>
-                                            <td class="txt-oflo">19</td>
-                                            <td><span class="font-medium">1250</span></td>
-                                            <td style="display: flex;gap: 10px;">
-                                                <form action="drugUpdate.php" method="POST">
-                                                    <button type="submit" class="btn btn-success text-white">Update</button>
-                                                </form>
-                                                <form action="drugDelete.php" method="POST">
-                                                    <button type="submit" class="btn btn-danger text-white">Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td class="txt-oflo">Ample Admin</td>
-                                            <td class="txt-oflo">19</td>
-                                            <td><span class="font-medium">1250</span></td>
-                                            <td style="display: flex;gap: 10px;">
-                                                <form action="drugUpdate.php" method="POST">
-                                                    <button type="submit" class="btn btn-success text-white">Update</button>
-                                                </form>
-                                                <form action="drugDelete.php" method="POST">
-                                                    <button type="submit" class="btn btn-danger text-white">Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>                                       
+                                        <?php 
                                         
+                                            // foreach($result as $row ){
+                                                ?>
+                                            <tr>
+                                                <td><?php //echo $row['id']; ?></td>
+                                                <td><?php //echo $row['name']; ?></td>
+                                                <td><?php //echo $row['dose']; ?></td>
+                                                <td><?php //echo $row['drugCount']; ?></td>
+                                                <td><?php //echo $row['expireDate']; ?></td>
+                                                <td style="display: flex;gap: 10px;">
+                                                    <form action="pages-update-drug.php" method="POST">
+                                                        <input type="hidden" name="id" value="<?php //echo $row['id']; ?>">
+                                                        <button type="submit" class="btn btn-success">Update</button>
+                                                    </form>
+                                                    <form action="../../php/drugDelete.php" method="POST">
+                                                        <input type="hidden" name="id" value="<?php //echo $row['id']; ?>">
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                </td>
+                                                
+                                            </tr>
+                                                <?php
+                                            //}
+                                        ?>
                                     </tbody>
+                                  
                                 </table>
                             </div>
+                            <div class="pagination">
+                                <?php
+                                // $totalCountQuery = "SELECT COUNT(*) AS total FROM drugs";
+                                // $totalCountResult = mysqli_query($conn, $totalCountQuery);
+                                // $totalCountRow = mysqli_fetch_assoc($totalCountResult);
+                                // $totalCount = $totalCountRow['total'];
+                                // $totalPages = ceil($totalCount / $recordsPerPage);
+                                // if ($page > 1) {
+                                //     echo '<a href="?page=' . ($page - 1) . '" class="page-link">&laquo; Previous</a>';
+                                // }
+                                // for ($i = 1; $i <= $totalPages; $i++) {
+                                //     echo '<a href="?page=' . $i . '" class="page-link">' . $i . '</a>';
+                                // }
+                                // if ($page < $totalPages) {
+                                //     echo '<a href="?page=' . ($page + 1) . '" class="page-link">Next &raquo;</a>';
+                                // }
+                                ?>
+                            </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                
             </div>

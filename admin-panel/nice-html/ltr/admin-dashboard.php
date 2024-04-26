@@ -32,7 +32,7 @@
             <div class="container-fluid">
                 
                 <div class="row">
-                    <div class="col-lg-12 col-xlg-12">
+                    <!-- <div class="col-lg-12 col-xlg-12">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Drugs List</h4>
@@ -97,7 +97,7 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 
             </div>

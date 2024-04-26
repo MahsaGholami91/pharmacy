@@ -1,13 +1,16 @@
-
+<?php   
+    include "header.php";
+?>
     
     <aside class="left-sidebar" data-sidebarbg="skin5">
         <div class="scroll-sidebar">
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
                     <?php
-                        $query = "SELECT * FROM permission WHERE ";
-                        $result = mysqli_query($conn, $query);
-                    
+                        // $query = "SELECT * FROM `permission` JOIN `role_permission` on `permission`.`permission`=`role_permission`.`permission` WHERE `role_permission`.`roleId`= ?; ";
+                        // $result = mysqli_query($conn, $query);
+                        echo "result";
+                        die;
                     ?>
 
 
