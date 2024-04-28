@@ -21,8 +21,16 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
 }
 
 
-include "../../layout/header.php";
-include "../../layout/aside.php" ;
+
+    include "../../layout/header.php";
+    include "../../layout/menu.php" ;
+    include "../../includes/functions.php" ;
+
+
+    $permission = 'drug_update';
+     getPermission($conn,$permission);
+        
+
 ?>
 
 

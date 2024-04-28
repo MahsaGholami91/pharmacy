@@ -1,7 +1,12 @@
-
 <?php 
     include "../../layout/header.php";
-    include "../../layout/aside.php" ;
+    include "../../layout/menu.php" ;
+    include "../../includes/functions.php" ;
+
+    $permission = 'add_user';
+    getPermission($conn,$permission);
+        
+
 ?>
 
         <div class="page-wrapper">

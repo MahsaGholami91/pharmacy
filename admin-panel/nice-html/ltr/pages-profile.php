@@ -22,7 +22,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
     }
 }
     include "../../layout/header.php";
-    include "../../layout/aside.php" ;
+    include "../../layout/menu.php" ;
  ?>
         <div class="page-wrapper">
             

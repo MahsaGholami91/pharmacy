@@ -125,19 +125,36 @@ function addOrUpdateDrug($conn, $drugName, $drugDose, $drugCount, $drugDesc, $dr
     }
 }
 
-function addText($conn, $beforeAna, $afterAna,$username) {
-    $sql = "INSERT INTO `text` (`text`, `afterAnalyze`, `userId`) VALUES (? , ? ,?);";
+function addText($conn, $beforeAna, $afterAna,$userId) {
+    $sql = "INSERT INTO `text` (`text`, `analyzed`, `userId`) VALUES (? , ? ,?);";
     $stmt = mysqli_stmt_init($conn);
    
     if(!mysqli_stmt_prepare($stmt,$sql) ){
-    header("location: ../nice-html/ltr/pages-add-user.php?error=stmtfailed");
-    exit();
+        return false;
     }
-     mysqli_stmt_bind_param($stmt,"tts",$beforeAna, $afterAna,$username);
+     mysqli_stmt_bind_param($stmt,"ssi",$beforeAna, $afterAna,$userId);
 
      mysqli_stmt_execute($stmt);
      mysqli_stmt_close($stmt);
-     header("location: ../nice-html/ltr/pages-add-user.php?error=none");
-    exit();
+    return true;
+}
+
+
+function getPermission($conn, $permission){
+    $query = "SELECT * FROM `permission` JOIN `role_permission` on `permission`.`id`=`role_permission`.`permissionId` WHERE `role_permission`.`roleId`= '". $_SESSION['roleId'] ."';  ";
+        $status = false;
+        $result = mysqli_query($conn, $query);
+
+        foreach($result as $row){
+
+            if($row['permission'] == $permission){
+                $status = true;
+            }
+        }
+       
+        if($status == false){
+            header("location: ../../dashboard.php");
+            exit;
+        }
 }
 ?>

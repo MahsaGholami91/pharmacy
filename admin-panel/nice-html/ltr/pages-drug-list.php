@@ -1,7 +1,15 @@
-<?php     
-include "../../layout/header.php";
-include "../../layout/aside.php" ;
- ?>
+<?php 
+    include "../../layout/header.php";
+    include "../../layout/menu.php" ;
+    include "../../includes/functions.php" ;
+
+
+
+    $permission = 'drug_list';
+    getPermission($conn,$permission);
+       
+
+?>
   
         <div class="page-wrapper">
            
