@@ -1,11 +1,10 @@
 <?php      
 
 session_start();
-
 if(empty($_SESSION['username'])){
     header("location: ../../../login-page/login.php");
-
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +29,6 @@ if(empty($_SESSION['username'])){
 </head>
 
 <body>
-    <?php var_dump("kk"); ?>
     
     <div class="preloader">
         <div class="lds-ripple">
@@ -92,8 +90,7 @@ if(empty($_SESSION['username'])){
                         <img src="../../assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="pages-profile.php"><i class="ti-user me-1 ms-1"></i>
-                            My Profile</a>
+                        <a class="dropdown-item" href="pages-profile.php"><i class="ti-user me-1 ms-1"></i> My Profile</a>
                         <a class="dropdown-item" href="../../php/logout.php"><i class="ti-user me-1 ms-1"></i>
                         Log Out</a>
                     </ul>
@@ -104,4 +101,3 @@ if(empty($_SESSION['username'])){
     </nav>
 </header>
         
-<?php var_dump("eee"); ?>

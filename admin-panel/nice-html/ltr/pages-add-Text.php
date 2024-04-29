@@ -47,18 +47,6 @@
         if($result){
             $success = "your text saved";
         }
-        // echo "<label for='textAnalyzed'>Word and Space Counts:</label>";
-        // echo '<textarea class="form-control" name = "textAnalyzed" rows="4" cols="50">';
-        // foreach ($counts["words"] as $word => $count) {
-        //     echo "$word: $count".", ";
-        // }
-
-        // echo "Spaces: " . $counts["spaces"] ;
-        // echo "</textarea>";
-        // echo "<br>";
-        // echo '<button name="submitBtn" class="btn btn-success text-white">Save Text</button> ';
-
-
 
         
     }
@@ -94,12 +82,7 @@
                     <div class="col-lg-12 col-xlg-12">
                         <div class="card">
                             <div class="card-body">
-                                <?php if(!empty($success)){
-                                    ?>
-                                    <div><?php echo $success ?></div>
-
-                                    <?php
-                                } ?>
+                                
                                 <form class="form-horizontal form-material mx-2"  method="post" >   
                                     <div class="form-group">
                                         <label for="text">Enter your text:</label>
@@ -109,20 +92,96 @@
                                         <div class="col-sm-12">
                                         <input class="btn btn-success text-white" type="submit" value="Count Words" >
                                         </div>
-                                    </div>
-                                   
-                                        
-                                        
-                                    
-                                </form>
-
-                                
+                                    </div>                                    
+                                </form>                               
 
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
+                <div class="row">
+                    
+                    <div class="col-lg-12 col-xlg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Drugs List</h4>
+                            </div>
+                            <div class="table-responsive">
+                                <?php 
+                                    require_once "../../includes/db.php";
+                                    $recordsPerPage = 5;
+
+                                    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+                                    $offset = ($page - 1) * $recordsPerPage;
+
+                                    $sql = "SELECT * FROM `text` LIMIT $offset, $recordsPerPage";
+                                    $result = mysqli_query($conn, $sql);
+
+                                    if (!$result) {
+                                        die("Query failed");
+                                    }
+
+                                ?>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">Id</th>
+                                            <th class="border-top-0">Text</th>
+                                            <th class="border-top-0">Analyzed</th>
+                                            <th class="border-top-0">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                        
+                                            foreach($result as $row ){
+                                                ?>
+                                            <tr>
+                                                <td><?php echo $row['id']; ?></td>
+                                                <td><?php echo $row['text']; ?></td>
+                                                <td><?php echo $row['analyzed']; ?></td>
+                                                <td style="display: flex;gap: 10px;">
+                                                    <form action="../../php/textDelete.php" method="POST">
+                                                        <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                                        <button type="submit" class="btn btn-danger text-white">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                                <?php
+                                            }
+                                        ?>
+                                    </tbody>
+                                  
+                                </table>
+                            </div>
+
+                            <div class="pagination">
+                                <?php
+                                    $totalCountQuery = "SELECT COUNT(*) AS total FROM `text`";
+                                    $totalCountResult = mysqli_query($conn, $totalCountQuery);
+                                    $totalCountRow = mysqli_fetch_assoc($totalCountResult);
+                                    $totalCount = $totalCountRow['total'];
+
+                                    $totalPages = ceil($totalCount / $recordsPerPage);
+
+                                    if ($page > 1) {
+                                        echo '<a href="?page=' . ($page - 1) . '" class="page-link">&laquo; Previous</a>';
+                                    }
+
+                                    for ($i = 1; $i <= $totalPages; $i++) {
+                                        echo '<a href="?page=' . $i . '" class="page-link">' . $i . '</a>';
+                                    }
+
+                                    if ($page < $totalPages) {
+                                        echo '<a href="?page=' . ($page + 1) . '" class="page-link">Next &raquo;</a>';
+                                    }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <?php include "../../layout/footer.php" ?>

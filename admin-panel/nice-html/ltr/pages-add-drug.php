@@ -3,15 +3,11 @@
     include "../../layout/menu.php" ;
     include "../../includes/functions.php" ;
 
-
     $permission = 'add_drug';
-    getPermission($conn,$permission);
-        
-
+    getPermission($conn,$permission);   
 ?>
         
         <div class="page-wrapper">
-           
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
@@ -97,17 +93,13 @@
                     <?php
                         if (isset($_GET["error"])) {
                             if ($_GET["error"] == "emptyinput") {
-                                echo "<p>Fill in all fiels!<p>";
+                                echo "<p class='text-danger'>Fill in all fiels!<p>";
                             }                        
-                            
-                            else if ($_GET["error"] == "drugtaken") {
-                                echo "<p>Username allready taken!<p>";
-                            }
                             else if ($_GET["error"] == "stmtfailed") {
-                                echo "<p>Something went wring, try again!<p>";
+                                echo "<p class='text-danger'>Something went wring, try again!<p>";
                             }
                             else if ($_GET["error"] == "none") {
-                                echo "<p>Your data inserted!<p>";
+                                echo "<p class='text-success'>Your data inserted!<p>";
                             }
                         }
                     ?>

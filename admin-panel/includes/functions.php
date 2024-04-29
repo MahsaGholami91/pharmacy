@@ -139,22 +139,52 @@ function addText($conn, $beforeAna, $afterAna,$userId) {
     return true;
 }
 
-
-function getPermission($conn, $permission){
-    $query = "SELECT * FROM `permission` JOIN `role_permission` on `permission`.`id`=`role_permission`.`permissionId` WHERE `role_permission`.`roleId`= '". $_SESSION['roleId'] ."';  ";
+function getPermission($conn, $permission) {
+    if (isset($_SESSION['roleId']) && !empty($_SESSION['roleId'])) {
+        $query = "SELECT `permission` FROM `permission` JOIN `role_permission` on `permission`.`id`=`role_permission`.`permissionId` WHERE `role_permission`.`roleId`= '" . $_SESSION['roleId'] . "';";
         $status = false;
         $result = mysqli_query($conn, $query);
 
-        foreach($result as $row){
+        $allPermissions = array();
 
-            if($row['permission'] == $permission){
-                $status = true;
-            }
+        while ($row = mysqli_fetch_assoc($result)) {
+            $allPermissions[] = $row['permission'];
         }
-       
-        if($status == false){
-            header("location: ../../dashboard.php");
+        var_dump($_SESSION['roleId']);
+        var_dump($permission);
+        var_dump($allPermissions);
+        die;
+
+        if (!in_array($permission, $allPermissions)) {
+            header("location: ../nice-html/ltr/error-404.php");
             exit;
         }
+    } else {
+
+        header("location: ../nice-html/ltr/login.php");
+        exit;
+    }
 }
+
+
+
+// function getPermission($conn, $permission) {
+//     $query = "SELECT `permission` FROM `permission` JOIN `role_permission` on `permission`.`id`=`role_permission`.`permissionId` WHERE `role_permission`.`roleId`= '" . $_SESSION['roleId'] . "';";
+//     $status = false;
+//     $result = mysqli_query($conn, $query);
+
+//     $allPermissions = array();
+
+//     while ($row = mysqli_fetch_assoc($result)) {
+//         $allPermissions[] = $row['permission'];
+//     }
+//     if (in_array($permission, $allPermissions)) {
+//         $status = true;
+//     }
+//     if($status == false){
+//         header("location: ../nice-html/ltr/error-404.php");
+//         exit;
+//     }
+// }
+
 ?>

@@ -7,6 +7,7 @@ if(isset($_POST["submit"])) {
     $password = $_POST['password'];
     $sql = "SELECT * FROM `users` WHERE `username` = '$username'";
     $result = mysqli_query($conn,$sql);
+    $msg = "";
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
         $check = password_verify($password , $row['password']);
@@ -19,10 +20,10 @@ if(isset($_POST["submit"])) {
             exit; 
         }
         else {
-            echo 'Wrong username or password';
+            echo $msg = 'Wrong username or password';
         }
     } else {
-        // header("location: ../../login.php");
+        echo $msg = 'user not found';    
     }
 }
 ?>

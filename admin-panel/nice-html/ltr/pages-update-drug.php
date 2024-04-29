@@ -1,7 +1,13 @@
 <?php
+require_once "../../includes/db.php";
+include "../../layout/header.php";
+include "../../layout/menu.php" ;
+include "../../includes/functions.php" ;
+
+$permission = 'drug_update';
+getPermission($conn,$permission);
 
 if (isset($_POST['id']) && !empty($_POST['id'])) {
-    require_once "../../includes/db.php";
     $drugId = $_POST['id'];
     $sql = "SELECT drugs.*, drug_category.name AS category_name FROM drugs JOIN drug_category ON drugs.drugCat = drug_category.id WHERE drugs.id = ?";
     $stmt = mysqli_stmt_init($conn);
@@ -20,16 +26,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
     }
 }
 
-
-
-    include "../../layout/header.php";
-    include "../../layout/menu.php" ;
-    include "../../includes/functions.php" ;
-
-
-    $permission = 'drug_update';
-     getPermission($conn,$permission);
-        
+    
 
 ?>
 
@@ -124,9 +121,6 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                 echo "<p>Fill in all fiels!<p>";
                             }                        
                             
-                            else if ($_GET["error"] == "drugtaken") {
-                                echo "<p>Username allready taken!<p>";
-                            }
                             else if ($_GET["error"] == "stmtfailed") {
                                 echo "<p>Something went wring, try again!<p>";
                             }

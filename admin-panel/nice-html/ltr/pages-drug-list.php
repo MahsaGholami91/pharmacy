@@ -84,11 +84,11 @@
                                                 <td style="display: flex;gap: 10px;">
                                                     <form action="pages-update-drug.php" method="POST">
                                                         <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                        <button type="submit" class="btn btn-success">Update</button>
+                                                        <button type="submit" class="btn btn-success text-white">Update</button>
                                                     </form>
                                                     <form action="../../php/drugDelete.php" method="POST">
                                                         <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                        <button type="submit" class="btn btn-danger text-white">Delete</button>
                                                     </form>
                                                 </td>
                                                 
@@ -134,3 +134,7 @@
                 </div>
             </div>
             <?php include "../../layout/footer.php" ?>
+
+
+
+            

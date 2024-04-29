@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
+
+
     <section class="h-100 gradient-form" style="background-color: #eee;">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -38,10 +40,16 @@
                     <div class="text-center pt-1 mb-5 pb-1">
                         <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" name="submit" type="submit">Log
                         in</button>
-                        <a class="text-muted" href="#!">Forgot password?</a>
+                        <!-- <a class="text-muted" href="#!">Forgot password?</a> -->
                     </div>
 
                     </form>
+                        <?php if(!empty($msg)){
+                                    ?>
+                                    <p class="text-danger"><?php echo $msg ?></p>
+
+                                    <?php
+                                } ?>
 
                 </div>
                 </div>

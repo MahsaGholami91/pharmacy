@@ -1,20 +1,25 @@
 <?php     
+    include "../../includes/functions.php" ;
 
         session_start();
-
+// var_dump($_SESSION);
+// die;
     
-if (isset($_POST['id']) && !empty($_POST['id'])) {
+if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
     require_once "../../includes/db.php";
-    $userId = $_POST['id'];
-    $sql = "SELECT users.*, role.name AS role_name FROM `users` JOIN `role` ON users.roleId = role.id WHERE users.id = ?";
+    $userId = $_SESSION['id'];
+    $roleId = $_SESSION['roleId'];
+    $sql = "SELECT users.*, role.name AS role_name FROM `users` JOIN `role` ON users.roleId = role.id WHERE users.id = ? ";
     $stmt = mysqli_stmt_init($conn);
     if (mysqli_stmt_prepare($stmt, $sql)) {
         mysqli_stmt_bind_param($stmt, "i", $userId);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         if ($row = mysqli_fetch_assoc($result)) {
-            $fullName = $row['fullName'];
-            $userName = $row['userName'];
+            // var_dump($row);
+            // die;
+            $fullName = $row['fullname'];
+            $userName = $row['username'];
             $password = $row['password'];
             $role = $row['role_name'];
             
@@ -51,24 +56,26 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                     <div class="col-lg-12 col-xlg-12">
                         <div class="card">
                             <div class="card-body">
-                                <form class="form-horizontal form-material mx-2" action="../../php/signin.php" method="post">
+                                <form class="form-horizontal form-material mx-2" action="../../php/userUpdate.php" method="post">
+                                <input type="hidden" name="userId"  value="<?php echo $userId; ?>">
+
                                     <div class="form-group">
                                         <label class="col-md-12">Full Name</label>
                                         <div class="col-md-12">
-                                            <input type="text" name="fullName" placeholder="Name and Lastname..." class="form-control form-control-line">
+                                            <input type="text" name="fullName" placeholder="Name and Lastname..." class="form-control form-control-line" value="<?php echo $fullName; ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">User Name</label>
                                         <div class="col-md-12">
-                                            <input type="text" name="userName" placeholder="Username..." class="form-control form-control-line">
+                                            <input type="text" name="userName" placeholder="Username..." class="form-control form-control-line" value="<?php echo $userName; ?>">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-md-12">Password</label>
                                         <div class="col-md-12 d-flex">
-                                            <input type="password" value="" class="form-control form-control-line" name="password" id="myPass">
+                                            <input type="password" value="" class="form-control form-control-line" name="password" id="myPass" >
                                             <div class="input-group-append">
                                                 <span class="input-group-text" onclick="password_show_hide();">
                                                   <i class="me-2 mdi mdi-eye" id="show_eye_pass"></i>
@@ -80,7 +87,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                     <div class="form-group">
                                         <label class="col-md-12">Repeat Password</label>
                                         <div class="col-md-12  d-flex">
-                                            <input type="password" value="" class="form-control form-control-line" name="repeatPassword" id="myrePass">
+                                            <input type="password" value="" class="form-control form-control-line" name="repeatPassword" id="myrePass" >
                                             <span class="input-group-text" onclick="repassword_show_hide();">
                                                 <i class="me-2 mdi mdi-eye" id="show_eye_repass"></i>
                                                 <i class="me-2 mdi mdi-eye-off d-none" id="hide_eye_repass"></i>
@@ -96,7 +103,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
 
                                                 ?>
                                         <select name="role" >
-                                            <option value="Select Role" selected>Select Role</option>
+                                            <option value="<?php  echo $roleId ?>" selected><?php  echo $role ?></option>
                                             <?php 
                                                 $roles = "SELECT * FROM `role`";
                         
@@ -124,25 +131,23 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                     <?php
                         if (isset($_GET["error"])) {
                             if ($_GET["error"] == "emptyinput") {
-                                echo "<p>Fill in all fiels!<p>";
+                                echo "<p class='text-danger'>Fill in all fiels!<p>";
                             }
                             else if ($_GET["error"] == "invalidUid") {
-                                echo "<p>Choose a proper username!<p>";
+                                echo "<p class='text-danger'>Choose a proper username!<p>";
                             }
-                            else if ($_GET["error"] == "invalidEmail") {
-                                echo "<p>Choose a proper email!<p>";
-                            }
-                            else if ($_GET["error"] == "passworddontmatch") {
-                                echo "<p>Passwors doesnt match!<p>";
+                            
+                            else if ($_GET["error"] == "passworddoesntmatch") {
+                                echo "<p class='text-danger'>Passwors doesn't match!<p>";
                             }
                             else if ($_GET["error"] == "usernametaken") {
-                                echo "<p>Username allready taken!<p>";
+                                echo "<p class='text-danger'>Username allready taken!<p>";
                             }
                             else if ($_GET["error"] == "stmtfailed") {
-                                echo "<p>Something went wring, try again!<p>";
+                                echo "<p class='text-danger'>Something went wring, try again!<p>";
                             }
                             else if ($_GET["error"] == "none") {
-                                echo "<p>You have signed in!<p>";
+                                echo "<p class='text-seccess'>Your data updated!<p>";
                             }
                         }
                     ?>
