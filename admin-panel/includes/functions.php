@@ -15,6 +15,7 @@ function checkInt($drugDose){
 function emptyInputSignin($fullName, $userName, $password, $passwordRepeat) {
     $result = true;
     if(empty($fullName) || empty($userName) || empty($password) || empty($passwordRepeat)){
+        
         $result = true;
     }
     else {
@@ -87,16 +88,14 @@ function createUser($conn, $fullName, $userName, $password, $role) {
     $stmt = mysqli_stmt_init($conn);
    
     if(!mysqli_stmt_prepare($stmt,$sql) ){
-    header("location: ../nice-html/ltr/pages-add-user.php?error=stmtfailed");
-    exit();
+   return false;
     }
     $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
      mysqli_stmt_bind_param($stmt,"sssi",$fullName, $userName, $hashedPwd, $role);
 
      mysqli_stmt_execute($stmt);
      mysqli_stmt_close($stmt);
-     header("location: ../nice-html/ltr/pages-add-user.php?error=none");
-    exit();
+     return true;
 
 }
 
@@ -169,7 +168,7 @@ function getPermission($conn, $permission) {
 
         if (!in_array($permission, $allPermissions)) {
             // echo "jaye eshtebahi omadi";
-            header("location: ../nice-html/ltr/error-404.php");
+            header("location: dashboard.php");
             exit;
         }
     } else {

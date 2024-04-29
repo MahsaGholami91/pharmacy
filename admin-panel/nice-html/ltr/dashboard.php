@@ -10,14 +10,11 @@ $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($result);
 $roleName = $row['name'];
 ?>
-       
     <div class="page-wrapper">
-        
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-5 align-self-center">
                     <p>You are in<span class="fw-bold"> Dashboard </span>as <?php  echo $roleName ?>!</p>
-                    <!-- <h4 class="page-title">You are in Dashboard as <?php  //echo $roleName ?>!</h4> -->
                 </div>
                 <div class="col-7 align-self-center">
                     <div class="d-flex align-items-center justify-content-end">
@@ -35,11 +32,7 @@ $roleName = $row['name'];
         </div>
         
         <div class="container-fluid">
-            
-            <div class="row">
-                
-            </div>
-            
+            <div class="row"></div>
         </div>
         
 <?php include "../../layout/footer.php" ?>

@@ -1,5 +1,6 @@
 <?php
-    // Check if submit button pressed
+    ob_start();
+    session_start();
     if (isset($_POST["submitBtn"])) {
  
         $fullName = $_POST['fullName'];
@@ -11,27 +12,39 @@
         require_once "../includes/db.php";
         require_once "../includes/functions.php";
 
-        // check some validation after press submit btn
         if(emptyInputSignin($fullName, $userName, $password, $repeatPassword) !== false){
-            header("location: ../nice-html/ltr/pages-add-user.php?error=emptyinput");
+
+            $_SESSION['error-msg'] = "fill all fields";
+            header("location: ../nice-html/ltr/pages-add-user.php");
             exit();
         }
         if(invalidUid($username) !== false){
-            header("location: ../nice-html/ltr/pages-add-user.php?error=invalidUid");
+            $_SESSION['error-msg'] = "username dosent valid";
+            header("location: ../nice-html/ltr/pages-add-user.php");
             exit();
         }
         if(passwordMatch($password, $repeatPassword) !== false){
-            header("location: ../nice-html/ltr/pages-add-user.php?error=passworddoesntmatch");
+            $_SESSION['error-msg'] = "password and repeat password dosent same!";
+            header("location: ../nice-html/ltr/pages-add-user.php");
             exit();
         }
         if(uidExists($conn, $username ) !== false){
-            header("location: ../nice-html/ltr/pages-add-user.php?error=usernametaken");
+            $_SESSION['error-msg'] = "username exist!";
+            header("location: ../nice-html/ltr/pages-add-user.php");
             exit();
         }
    
+        if(createUser($conn,$fullName, $userName, $password, $role)){
+            $_SESSION['error-msg'] = "user added!";
+            header("location: ../nice-html/ltr/pages-add-user.php");
+            exit();
+
+        }else {
+            $_SESSION['error-msg'] = "something was wrong!";
+            header("location: ../nice-html/ltr/pages-add-user.php");
+            exit();
+        }
         
-        createUser($conn,$fullName, $userName, $password, $role);
-        var_dump("2");
     }
     else {
         echo "gavi";

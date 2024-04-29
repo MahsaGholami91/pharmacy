@@ -1,12 +1,14 @@
 <?php 
     include "../../layout/header.php";
-    include "../../layout/menu.php" ;
+    include "../../layout/menu.php";
     include "../../includes/functions.php" ;
 
-    $permission = 'add_user';
-    getPermission($conn,$permission);
+    // exit;
+    // getPermission($conn, 'add_user');
         
 
+    // var_dump($_SESSION);
+    // exit();
 ?>
 
         <div class="page-wrapper">
@@ -106,27 +108,35 @@
                         </div>
                     </div>
                     <?php
-                        if (isset($_GET["error"])) {
-                            if ($_GET["error"] == "emptyinput") {
-                                echo "<p class='text-danger'>Fill in all fiels!<p>";
-                            }
-                            else if ($_GET["error"] == "invalidUid") {
-                                echo "<p class='text-danger'>Choose a proper username!<p>";
-                            }
+
+                                                    // echo 'xsaxsaxsax';
+                                                    // var_dump($_SESSION['error-msg']);
+                    if(!empty($_SESSION['error-msg'])){
+                        // echo 'ssss';
+                        echo $_SESSION['error-msg'];
+                        $_SESSION['error-msg'] = "";
+                    }
+                        // if (isset($_GET["error"])) {
+                        //     if ($_GET["error"] == "emptyinput") {
+                        //         echo "<p class='text-danger'>Fill in all fiels!<p>";
+                        //     }
+                        //     else if ($_GET["error"] == "invalidUid") {
+                        //         echo "<p class='text-danger'>Choose a proper username!<p>";
+                        //     }
                             
-                            else if ($_GET["error"] == "passworddoesntmatch") {
-                                echo "<p class='text-danger'>Passwors doesn't match!<p>";
-                            }
-                            else if ($_GET["error"] == "usernametaken") {
-                                echo "<p class='text-danger'>Username allready taken!<p>";
-                            }
-                            else if ($_GET["error"] == "stmtfailed") {
-                                echo "<p class='text-danger'>Something went wring, try again!<p>";
-                            }
-                            else if ($_GET["error"] == "none") {
-                                echo "<p class='text-success'>User added!<p>";
-                            }
-                        }
+                        //     else if ($_GET["error"] == "passworddoesntmatch") {
+                        //         echo "<p class='text-danger'>Passwors doesn't match!<p>";
+                        //     }
+                        //     else if ($_GET["error"] == "usernametaken") {
+                        //         echo "<p class='text-danger'>Username allready taken!<p>";
+                        //     }
+                        //     else if ($_GET["error"] == "stmtfailed") {
+                        //         echo "<p class='text-danger'>Something went wring, try again!<p>";
+                        //     }
+                        //     else if ($_GET["error"] == "none") {
+                        //         echo "<p class='text-success'>User added!<p>";
+                        //     }
+                        // }
                     ?>
                 </div>
                 
