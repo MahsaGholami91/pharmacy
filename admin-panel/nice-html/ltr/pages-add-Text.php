@@ -13,9 +13,7 @@
         $words = preg_split('/(\s+)/', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
         $wordCounts = array();
         $spaceCount = 0;
-        
         foreach ($words as $word) {
-    
             if (!empty($word)) {
                 if ($word === " ") {
                     $spaceCount++;
@@ -46,15 +44,11 @@
        $result = addText($conn, $text, $str,$_SESSION['id']);
         if($result){
             $success = "your text saved";
-        }
-
-        
+        }        
     }
-
 ?>
         
         <div class="page-wrapper">
-            
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">

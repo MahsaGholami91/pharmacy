@@ -1,12 +1,24 @@
 <?php
+  
+function checkInt($drugDose){
+    if (!isset($drugDose) || !ctype_digit($drugDose)) {
+        $result = true;
+    }
+    else {
+        $result = false;
+    }
+    return $result;
+
+}
+
 
 function emptyInputSignin($fullName, $userName, $password, $passwordRepeat) {
-    $result=true;
+    $result = true;
     if(empty($fullName) || empty($userName) || empty($password) || empty($passwordRepeat)){
         $result = true;
     }
     else {
-        $result =false;
+        $result = false;
     }
     return $result;
 }
@@ -17,7 +29,7 @@ function emptyInputDrugs($drugName, $drugDose, $drugCount, $drugExp, $drugCat) {
         $result = true;
     }
     else {
-        $result =false;
+        $result = false;
     }
     return $result;
 }
@@ -150,18 +162,19 @@ function getPermission($conn, $permission) {
         while ($row = mysqli_fetch_assoc($result)) {
             $allPermissions[] = $row['permission'];
         }
-        var_dump($_SESSION['roleId']);
-        var_dump($permission);
-        var_dump($allPermissions);
-        die;
+        // var_dump($_SESSION['roleId']);
+        // var_dump($permission);
+        // var_dump($allPermissions);
+        // die;
 
         if (!in_array($permission, $allPermissions)) {
+            // echo "jaye eshtebahi omadi";
             header("location: ../nice-html/ltr/error-404.php");
             exit;
         }
     } else {
 
-        header("location: ../nice-html/ltr/login.php");
+        header("location: ../../login-page/login.php");
         exit;
     }
 }
