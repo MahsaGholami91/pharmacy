@@ -3,14 +3,9 @@
     include "../../layout/menu.php";
     include "../../includes/functions.php" ;
 
-    // exit;
-    // getPermission($conn, 'add_user');
-        
-
-    // var_dump($_SESSION);
-    // exit();
+    getPermission($conn, 'add_user');
+     
 ?>
-
         <div class="page-wrapper">
             <div class="page-breadcrumb">
                 <div class="row">
@@ -35,24 +30,32 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-xlg-12">
+                        <?php
+                            if(!empty($_SESSION['error-msg'])){ ?>
+                            <div class="text-danger"><?php echo $_SESSION['error-msg']; ?></div>
+                            <?php     
+                                $_SESSION['error-msg'] = "";
+                            }else { ?>
+                                <div class="text-success"><?php echo $_SESSION['success-msg']; ?></div>
+                             <?php $_SESSION['success-msg'] = ""; } ?>
                         <div class="card">
                             <div class="card-body">
                                 <form class="form-horizontal form-material mx-2" action="../../php/signin.php" method="post">
                                     <div class="form-group">
-                                        <label class="col-md-12">Full Name</label>
+                                        <label class="col-md-12">Full Name*</label>
                                         <div class="col-md-12">
                                             <input type="text" name="fullName" placeholder="Name and Lastname..." class="form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-12">User Name</label>
+                                        <label class="col-md-12">User Name*</label>
                                         <div class="col-md-12">
                                             <input type="text" name="userName" placeholder="Username..." class="form-control form-control-line">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-md-12">Password</label>
+                                        <label class="col-md-12">Password*</label>
                                         <div class="col-md-12 d-flex">
                                             <input type="password" value="" class="form-control form-control-line" name="password" id="myPass">
                                             <div class="input-group-append">
@@ -64,7 +67,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-12">Repeat Password</label>
+                                        <label class="col-md-12">Repeat Password*</label>
                                         <div class="col-md-12  d-flex">
                                             <input type="password" value="" class="form-control form-control-line" name="repeatPassword" id="myrePass">
                                             <span class="input-group-text" onclick="repassword_show_hide();">
@@ -75,26 +78,21 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-12">Select Role</label>
+                                        <label class="col-sm-12">Select Role*</label>
                                         <div class="col-sm-12">
                                             <?php 
                                                 require_once "../../includes/db.php";
-
-                                                ?>
+                                            ?>
                                         <select name="role" >
-                                            <option value="Select Role" selected>Select Role</option>
+                                            <option value="" >Select Role</option>
                                             <?php 
                                                 $roles = "SELECT * FROM `role`";
-                        
                                                 $result = mysqli_query($conn,$roles);
                                                 while($row = mysqli_fetch_array($result)){
                                             ?>
-                                            <option value="<?php  echo $row['id'] ?>"><?php  echo $row['name']?></option>
+                                            <option value="<?php  echo $row['id'] ?>"><?php echo $row['name']?></option>
                                                 <?php   } ?>
                                         </select>
-
-
-
                                          
                                         </div>
                                     </div>
@@ -107,39 +105,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php
-
-                                                    // echo 'xsaxsaxsax';
-                                                    // var_dump($_SESSION['error-msg']);
-                    if(!empty($_SESSION['error-msg'])){
-                        // echo 'ssss';
-                        echo $_SESSION['error-msg'];
-                        $_SESSION['error-msg'] = "";
-                    }
-                        // if (isset($_GET["error"])) {
-                        //     if ($_GET["error"] == "emptyinput") {
-                        //         echo "<p class='text-danger'>Fill in all fiels!<p>";
-                        //     }
-                        //     else if ($_GET["error"] == "invalidUid") {
-                        //         echo "<p class='text-danger'>Choose a proper username!<p>";
-                        //     }
-                            
-                        //     else if ($_GET["error"] == "passworddoesntmatch") {
-                        //         echo "<p class='text-danger'>Passwors doesn't match!<p>";
-                        //     }
-                        //     else if ($_GET["error"] == "usernametaken") {
-                        //         echo "<p class='text-danger'>Username allready taken!<p>";
-                        //     }
-                        //     else if ($_GET["error"] == "stmtfailed") {
-                        //         echo "<p class='text-danger'>Something went wring, try again!<p>";
-                        //     }
-                        //     else if ($_GET["error"] == "none") {
-                        //         echo "<p class='text-success'>User added!<p>";
-                        //     }
-                        // }
-                    ?>
                 </div>
-                
             </div>
            
             <footer class="footer text-center">
@@ -149,8 +115,7 @@
         </div>
         
     </div>
-    
-  
+      
     <script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="../../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/extra-libs/sparkline/sparkline.js"></script>

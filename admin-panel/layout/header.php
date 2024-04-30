@@ -1,5 +1,5 @@
 <?php      
-// ob_start();
+ob_start();
 session_start();
 
 if(empty($_SESSION['username'])){
@@ -11,7 +11,7 @@ if(empty($_SESSION['username'])){
 <html dir="ltr" lang="en">
 
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, Nice lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, Nice admin lite design, Nice admin lite dashboard bootstrap 5 dashboard template">
@@ -25,11 +25,9 @@ if(empty($_SESSION['username'])){
     <link rel="canonical" href="https://www.wrappixel.com/templates/niceadmin-lite/" />
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
     <link href="../../dist/css/style.min.css" rel="stylesheet">
-    
 </head>
 
 <body>
-    
     <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
@@ -51,13 +49,13 @@ if(empty($_SESSION['username'])){
                 <a href="admin-dashboard.php" class="logo">
                     <b class="logo-icon">
                         
-                        <img src="../../assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
-                        <img src="../../assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                        <!-- <img src="../../assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                        <img src="../../assets/images/logo-light-icon.png" alt="homepage" class="light-logo" /> -->
                     </b>
                     
                     <span class="logo-text">
-                        <img src="../../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
-                        <img src="../../assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                        <!-- <img src="../../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                        <img src="../../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /> -->
                     </span>
                 </a>
             </div>

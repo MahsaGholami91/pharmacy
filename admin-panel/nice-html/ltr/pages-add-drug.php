@@ -5,8 +5,7 @@
     include "../../includes/functions.php" ;
 
 
-    $permission = 'add_drug';
-    getPermission($conn,$permission);
+    getPermission($conn,'add_drug');
         
 
 ?>
@@ -36,23 +35,31 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-xlg-12">
+                        <?php
+                        if(!empty($_SESSION['error-msg'])){ ?>
+                        <div class="text-danger"><?php echo $_SESSION['error-msg']; ?></div>
+                        <?php     
+                            $_SESSION['error-msg'] = "";
+                        }else { ?>
+                            <div class="text-success"><?php echo $_SESSION['success-msg']; ?></div>
+                            <?php $_SESSION['success-msg'] = ""; } ?>
                         <div class="card">
                             <div class="card-body">
                                 <form class="form-horizontal form-material mx-2"  action="../../php/addDrug.php" method="post">
                                     <div class="form-group">
-                                        <label class="col-md-12">Name</label>
+                                        <label class="col-md-12">Name*</label>
                                         <div class="col-md-12">
                                             <input type="text" name="drugName" placeholder="Drug Name..." class="form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-12">Dose</label>
+                                        <label class="col-md-12">Dose*</label>
                                         <div class="col-md-12">
                                             <input type="text" name="drugDose" placeholder="Drug Dose..." class="form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-12">Count</label>
+                                        <label class="col-md-12">Count*</label>
                                         <div class="col-md-12">
                                             <input type="text" name="drugCount" placeholder="Drug Count..." class="form-control form-control-line">
                                         </div>
@@ -63,7 +70,7 @@
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label>Expire Date</label>
+                                        <label>Expire Date*</label>
                                         <input name="drugExp" id="datepicker" width="276" />
                                     </div>
                                     
@@ -74,7 +81,7 @@
                                             require_once "../../includes/db.php";
                                         ?>
                                             <select name="drugCat" class="form-select shadow-none form-control-line">
-                                                <option value="Select Drug Category" selected>Select Category</option>
+                                                <option value="" >Select Category</option>
                                                 <?php 
                                                 $categories = "SELECT * FROM `drug_category`";
                         
@@ -95,23 +102,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php
-                        if (isset($_GET["error"])) {
-                            if ($_GET["error"] == "emptyinput") {
-                                echo "<p>Fill in all fiels!<p>";
-                            }                        
-                            
-                            else if ($_GET["error"] == "drugtaken") {
-                                echo "<p>Username allready taken!<p>";
-                            }
-                            else if ($_GET["error"] == "stmtfailed") {
-                                echo "<p>Something went wring, try again!<p>";
-                            }
-                            else if ($_GET["error"] == "none") {
-                                echo "<p>Your data inserted!<p>";
-                            }
-                        }
-                    ?>
+                    
                 </div>
             </div>
             

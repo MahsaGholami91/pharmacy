@@ -3,16 +3,32 @@
     include "../../layout/menu.php" ;
     include "../../includes/functions.php" ;
 
-
-
-    $permission = 'drug_list';
-    getPermission($conn,$permission);
+    getPermission($conn,'drug_list');
        
-
 ?>
-  
+  <div class="modal" id="deleteModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+       
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this item?
+      </div>
+      <div class="modal-footer">
+        <form id="deleteForm" action="../../php/drugDelete.php" method="POST">
+          <input type="hidden" name="id" id="deleteItemId">
+          <button type="submit" class="btn btn-danger">Delete</button>
+          <button id="cancelButton" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
         <div class="page-wrapper">
-           
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
@@ -86,10 +102,11 @@
                                                         <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                                         <button type="submit" class="btn btn-success text-white">Update</button>
                                                     </form>
-                                                    <form action="../../php/drugDelete.php" method="POST">
-                                                        <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                                    <button type="button" class="btn btn-danger text-white" onclick="openDeleteModal(<?php echo $row['id']; ?>)">Delete</button>
+                                                    <!-- <form action="../../php/drugDelete.php" method="POST">
+                                                        <input type="hidden" name="id" value="<?php //echo $row['id']; ?>">
                                                         <button type="submit" class="btn btn-danger text-white">Delete</button>
-                                                    </form>
+                                                    </form> -->
                                                 </td>
                                                 
                                             </tr>
@@ -101,29 +118,23 @@
                                   
                                 </table>
                             </div>
-                            <!-- Pagination links -->
                             <div class="pagination">
                                 <?php
-                                // Count total number of records
                                 $totalCountQuery = "SELECT COUNT(*) AS total FROM drugs";
                                 $totalCountResult = mysqli_query($conn, $totalCountQuery);
                                 $totalCountRow = mysqli_fetch_assoc($totalCountResult);
                                 $totalCount = $totalCountRow['total'];
 
-                                // Calculate total number of pages
                                 $totalPages = ceil($totalCount / $recordsPerPage);
 
-                                // Previous page link
                                 if ($page > 1) {
                                     echo '<a href="?page=' . ($page - 1) . '" class="page-link">&laquo; Previous</a>';
                                 }
 
-                                // Page numbers
                                 for ($i = 1; $i <= $totalPages; $i++) {
                                     echo '<a href="?page=' . $i . '" class="page-link">' . $i . '</a>';
                                 }
 
-                                // Next page link
                                 if ($page < $totalPages) {
                                     echo '<a href="?page=' . ($page + 1) . '" class="page-link">Next &raquo;</a>';
                                 }

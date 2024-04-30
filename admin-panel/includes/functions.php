@@ -11,11 +11,9 @@ function checkInt($drugDose){
 
 }
 
-
-function emptyInputSignin($fullName, $userName, $password, $passwordRepeat) {
+function emptyInputSignin($fullName, $userName, $password, $passwordRepeat ,$role) {
     $result = true;
-    if(empty($fullName) || empty($userName) || empty($password) || empty($passwordRepeat)){
-        
+    if(empty($fullName) || empty($userName) || empty($password) || empty($passwordRepeat) || empty($role)){
         $result = true;
     }
     else {
@@ -23,7 +21,7 @@ function emptyInputSignin($fullName, $userName, $password, $passwordRepeat) {
     }
     return $result;
 }
-
+ 
 function emptyInputDrugs($drugName, $drugDose, $drugCount, $drugExp, $drugCat) {
     $result=true;
     if(empty($drugName) || empty($drugDose) || empty($drugCount) || empty($drugExp) || empty($drugCat)){
@@ -32,6 +30,7 @@ function emptyInputDrugs($drugName, $drugDose, $drugCount, $drugExp, $drugCat) {
     else {
         $result = false;
     }
+ 
     return $result;
 }
 
@@ -57,15 +56,12 @@ function passwordMatch($password, $passwordRepeat) {
     return $result;
 }
 
-
-
 function uidExists($conn, $userName) {
     $sql = "SELECT * FROM users WHERE username = ? ;";
     $stmt = mysqli_stmt_init($conn);
    
     if(!mysqli_stmt_prepare($stmt,$sql) ){
-        header("location: ../pages-add-user.php?error=stmtfailed");
-    exit();
+        return false;
     }
     mysqli_stmt_bind_param($stmt,"s",$userName);
     mysqli_stmt_execute($stmt);
@@ -83,28 +79,24 @@ function uidExists($conn, $userName) {
 }
 
 function createUser($conn, $fullName, $userName, $password, $role) {
-
     $sql = "INSERT INTO `users` (`fullname`, `username`, `password`, `roleId`) VALUES (? , ? ,? ,?);";
     $stmt = mysqli_stmt_init($conn);
-   
+    
     if(!mysqli_stmt_prepare($stmt,$sql) ){
-   return false;
+        return false;
     }
     $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
      mysqli_stmt_bind_param($stmt,"sssi",$fullName, $userName, $hashedPwd, $role);
-
      mysqli_stmt_execute($stmt);
      mysqli_stmt_close($stmt);
      return true;
-
 }
 
 function addOrUpdateDrug($conn, $drugName, $drugDose, $drugCount, $drugDesc, $drugExp, $drugCat) {
     $sql = "SELECT * FROM `drugs` WHERE `name` = ? AND `dose` = ? AND `expireDate` = ? AND `drugCat` = ?";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../pages-add-drug.php?error=stmtfailed");
-        exit();
+        return false;
     }
     mysqli_stmt_bind_param($stmt, "siss", $drugName, $drugDose, $drugExp, $drugCat);
     mysqli_stmt_execute($stmt);
@@ -115,8 +107,7 @@ function addOrUpdateDrug($conn, $drugName, $drugDose, $drugCount, $drugDesc, $dr
         $sql = "UPDATE `drugs` SET `drugCount` = `drugCount` + ? WHERE `name` = ? AND `dose` = ? AND `expireDate` = ? AND `drugCat` = ?";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
-            header("location: ../pages-add-drug.php?error=stmtfailed");
-            exit();
+            return false;
         }
         mysqli_stmt_bind_param($stmt, "isiss", $drugCount, $drugName, $drugDose, $drugExp, $drugCat);
         mysqli_stmt_execute($stmt);
@@ -126,8 +117,7 @@ function addOrUpdateDrug($conn, $drugName, $drugDose, $drugCount, $drugDesc, $dr
         $sql = "INSERT INTO drugs (`name`, `dose`, `expireDate`, `drugCat`, `drugCount`, `description`) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
-            header("location: ../pages-add-drug.php?error=stmtfailed");
-            exit();
+            return false;
         }
         mysqli_stmt_bind_param($stmt, "sisiis", $drugName, $drugDose, $drugExp, $drugCat, $drugCount, $drugDesc);
         mysqli_stmt_execute($stmt);
@@ -161,13 +151,9 @@ function getPermission($conn, $permission) {
         while ($row = mysqli_fetch_assoc($result)) {
             $allPermissions[] = $row['permission'];
         }
-        // var_dump($_SESSION['roleId']);
-        // var_dump($permission);
-        // var_dump($allPermissions);
-        // die;
+        
 
         if (!in_array($permission, $allPermissions)) {
-            // echo "jaye eshtebahi omadi";
             header("location: dashboard.php");
             exit;
         }
@@ -179,24 +165,5 @@ function getPermission($conn, $permission) {
 }
 
 
-
-// function getPermission($conn, $permission) {
-//     $query = "SELECT `permission` FROM `permission` JOIN `role_permission` on `permission`.`id`=`role_permission`.`permissionId` WHERE `role_permission`.`roleId`= '" . $_SESSION['roleId'] . "';";
-//     $status = false;
-//     $result = mysqli_query($conn, $query);
-
-//     $allPermissions = array();
-
-//     while ($row = mysqli_fetch_assoc($result)) {
-//         $allPermissions[] = $row['permission'];
-//     }
-//     if (in_array($permission, $allPermissions)) {
-//         $status = true;
-//     }
-//     if($status == false){
-//         header("location: ../nice-html/ltr/error-404.php");
-//         exit;
-//     }
-// }
 
 ?>

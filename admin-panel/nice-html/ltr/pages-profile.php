@@ -1,10 +1,7 @@
 <?php     
     include "../../includes/functions.php" ;
+    session_start();
 
-        session_start();
-// var_dump($_SESSION);
-// die;
-    
 if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
     require_once "../../includes/db.php";
     $userId = $_SESSION['id'];
@@ -16,8 +13,6 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         if ($row = mysqli_fetch_assoc($result)) {
-            // var_dump($row);
-            // die;
             $fullName = $row['fullname'];
             $userName = $row['username'];
             $password = $row['password'];
@@ -113,9 +108,6 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                                             <option value="<?php  echo $row['id'] ?>"><?php  echo $row['name']?></option>
                                                 <?php   } ?>
                                         </select>
-
-
-
                                          
                                         </div>
                                     </div>

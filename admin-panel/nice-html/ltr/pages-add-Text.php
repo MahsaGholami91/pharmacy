@@ -4,14 +4,14 @@
     include "../../includes/functions.php" ;
 
 
-    $permission = 'analyze_text';
-    getPermission($conn,$permission);
+    getPermission($conn,'analyze_text');
     $success = "";
 
     function countWordsAndSpaces($text) {
         $text = strtolower($text);                      
         $words = preg_split('/(\s+)/', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
         $wordCounts = array();
+    
         $spaceCount = 0;
         foreach ($words as $word) {
             if (!empty($word)) {
@@ -40,14 +40,32 @@
 
         $str .=  "Spaces: " . $counts["spaces"] ;
         
-
        $result = addText($conn, $text, $str,$_SESSION['id']);
         if($result){
             $success = "your text saved";
         }        
     }
 ?>
-        
+        <div class="modal" id="deleteModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this item?
+                </div>
+                <div class="modal-footer">
+                    <form id="deleteForm" action="../../php/textDelete.php" method="POST">
+                    <input type="hidden" name="id" id="deleteItemId">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button id="cancelButton" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
         <div class="page-wrapper">
             <div class="page-breadcrumb">
                 <div class="row">
@@ -133,14 +151,15 @@
                                             foreach($result as $row ){
                                                 ?>
                                             <tr>
-                                                <td><?php echo $row['id']; ?></td>
-                                                <td><?php echo $row['text']; ?></td>
-                                                <td><?php echo $row['analyzed']; ?></td>
-                                                <td style="display: flex;gap: 10px;">
-                                                    <form action="../../php/textDelete.php" method="POST">
-                                                        <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                                <td style="vertical-align: middle;"><?php echo $row['id']; ?></td>
+                                                <td style="vertical-align: middle;"><?php echo $row['text']; ?></td>
+                                                <td style="vertical-align: middle;"><?php echo $row['analyzed']; ?></td>
+                                                <td style="vertical-align: middle;">
+                                                <button type="button" class="btn btn-danger text-white" onclick="openDeleteModal(<?php echo $row['id']; ?>)">Delete</button>
+                                                    <!-- <form action="../../php/textDelete.php" method="POST">
+                                                        <input type="hidden" name="id" value="<?php //echo $row['id']; ?>">
                                                         <button type="submit" class="btn btn-danger text-white">Delete</button>
-                                                    </form>
+                                                    </form> -->
                                                 </td>
                                             </tr>
                                                 <?php

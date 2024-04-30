@@ -12,9 +12,9 @@
         require_once "../includes/db.php";
         require_once "../includes/functions.php";
 
-        if(emptyInputSignin($fullName, $userName, $password, $repeatPassword) !== false){
+        if(emptyInputSignin($fullName, $userName, $password, $repeatPassword ,$role) !== false){
 
-            $_SESSION['error-msg'] = "fill all fields";
+            $_SESSION['error-msg'] = "Fill in the fields with stars";
             header("location: ../nice-html/ltr/pages-add-user.php");
             exit();
         }
@@ -35,7 +35,7 @@
         }
    
         if(createUser($conn,$fullName, $userName, $password, $role)){
-            $_SESSION['error-msg'] = "user added!";
+            $_SESSION['success-msg'] = "user added!";
             header("location: ../nice-html/ltr/pages-add-user.php");
             exit();
 
