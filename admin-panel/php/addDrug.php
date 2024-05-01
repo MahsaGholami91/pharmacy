@@ -25,11 +25,17 @@
             header("location: ../nice-html/ltr/pages-add-drug.php");
             exit();
         } 
-        if(checkInt($drugDose) !== false){
+        if(checkIntDose($drugDose) !== false){
             $_SESSION['error-msg'] = "Dose must be number";
             header("location: ../nice-html/ltr/pages-add-drug.php");
             exit();
         } 
+        if(checkIntCount($drugCount) !== false){
+            $_SESSION['error-msg'] = "Count must be number";
+            header("location: ../nice-html/ltr/pages-add-drug.php");
+            exit();
+        }
+        
 
         if(addOrUpdateDrug($conn, $drugName, $drugDose, $drugCount, $drugDesc, $drugExp, $drugCat)){
             $_SESSION['success-msg'] = "Drug added";

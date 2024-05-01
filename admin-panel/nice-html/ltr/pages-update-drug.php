@@ -7,22 +7,19 @@ include "../../includes/functions.php" ;
 $permission = 'drug_update';
 getPermission($conn,$permission);
 
-if (isset($_POST['id']) && !empty($_POST['id'])) {
-    $drugId = $_POST['id'];
-    $sql = "SELECT drugs.*, drug_category.name AS category_name FROM drugs JOIN drug_category ON drugs.drugCat = drug_category.id WHERE drugs.id = ?";
+if (!empty($_GET['id'])) {
+    $drugId = $_GET['id'];
+    $sql = "SELECT * FROM drugs WHERE drugs.id = ?";
     $stmt = mysqli_stmt_init($conn);
     if (mysqli_stmt_prepare($stmt, $sql)) {
         mysqli_stmt_bind_param($stmt, "i", $drugId);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
-        if ($row = mysqli_fetch_assoc($result)) {
-            $drugName   = $row['name'];
-            $drugDose   = $row['dose'];
-            $drugCount  = $row['drugCount'];
-            $drugDesc   = $row['description'];
-            $drugExp    = $row['expireDate'];
-            $drugCat    = $row['category_name'];
-        }
+        $row = mysqli_fetch_assoc($result);
+
+
+//    var_dump($row);
+//    die;
     }
 }
 
@@ -57,50 +54,57 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-xlg-12">
+                    <?php
+                            if(!empty($_SESSION['error-msg'])){ ?>
+                            <div class="text-danger"><?php echo $_SESSION['error-msg']; ?></div>
+                            <?php     
+                                $_SESSION['error-msg'] = "";
+                            }else if (!empty($_SESSION['success-msg'])) { ?>
+                                <div class="text-success"><?php echo $_SESSION['success-msg']; ?></div>
+                             <?php $_SESSION['success-msg'] = ""; } ?>
                         <div class="card">
                             <div class="card-body">
                                 <form class="form-horizontal form-material mx-2" action="../../php/drugUpdate.php" method="post">
                                 <input type="hidden" name="drugId" value="<?php echo $drugId; ?>">
                                     <div class="form-group">
-                                        <label class="col-md-12">Name</label>
+                                        <label class="col-md-12">*Name</label>
                                         <div class="col-md-12">
-                                            <input type="text" name="drugName" placeholder="Drug Name..." class="form-control form-control-line" value="<?php echo $drugName; ?>">
+                                            <input type="text" name="drugName" placeholder="Drug Name..." class="form-control form-control-line" value="<?php if(!empty($row['name'])){ echo $row['name'];}; ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-12">Dose</label>
+                                        <label class="col-md-12">*Dose</label>
                                         <div class="col-md-12">
-                                            <input type="text" name="drugDose" placeholder="Drug Dose..." class="form-control form-control-line" value="<?php echo $drugDose; ?>">
+                                            <input type="text" name="drugDose" placeholder="Drug Dose..." class="form-control form-control-line" value="<?php if(!empty($row['dose'])){ echo $row['dose'];}; ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-12">Count</label>
+                                        <label class="col-md-12">*Count</label>
                                         <div class="col-md-12">
-                                            <input type="text" name="drugCount" placeholder="Drug Count..." class="form-control form-control-line" value="<?php echo $drugCount; ?>">
+                                            <input type="text" name="drugCount" placeholder="Drug Count..." class="form-control form-control-line" value="<?php if(!empty($row['drugCount'])){ echo $row['drugCount'];}; ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Description</label>
-                                        <textarea name="drugDesc" class="form-control" rows="5" value="<?php echo $drugDesc; ?>"><?php echo $drugDesc; ?></textarea>
+                                        <textarea name="drugDesc" class="form-control" rows="5" ><?php if(!empty($row['description'])){ echo $row['description'];}; ?></textarea>
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label>Expire Date</label>
-                                        <input name="drugExp" id="datepicker" width="276" value="<?php echo $drugExp; ?>"/>
+                                        <label>*Expire Date</label>
+                                        <input name="drugExp" id="datepicker" width="276" value="<?php if(!empty($row['expireDate'])){ echo $row['expireDate'];}; ?>"/>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-12">Select Drug Category</label>
+                                        <label class="col-sm-12">*Select Drug Category</label>
                                         <div class="col-sm-12">
                                         <select name="drugCat" class="form-select shadow-none form-control-line">
-                                        <option value="<?php  echo $row['drugCat'] ?>"><?php  echo $drugCat?></option>
                                         <?php 
                                             $categories = "SELECT * FROM `drug_category`";
                     
                                             $result = mysqli_query($conn,$categories);
-                                            while($row = mysqli_fetch_array($result)){
+                                            while($category = mysqli_fetch_array($result)){
                                         ?>
-                                            <option value="<?php  echo $row['id'] ?>"><?php  echo $row['name']?></option>
+                                            <option <?php if(!empty($row['drugCat']) && $row['drugCat'] == $category['id']){ ?> selected="selected" <?php  } ?> value="<?php  echo $category['id'] ?>"><?php  echo $category['name']?></option>
                                         <?php } ?>
                                         </select>
 

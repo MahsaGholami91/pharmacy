@@ -35,7 +35,7 @@
                             <div class="text-danger"><?php echo $_SESSION['error-msg']; ?></div>
                             <?php     
                                 $_SESSION['error-msg'] = "";
-                            }else { ?>
+                            }else if (!empty($_SESSION['success-msg'])) { ?>
                                 <div class="text-success"><?php echo $_SESSION['success-msg']; ?></div>
                              <?php $_SESSION['success-msg'] = ""; } ?>
                         <div class="card">
@@ -44,20 +44,20 @@
                                     <div class="form-group">
                                         <label class="col-md-12">Full Name*</label>
                                         <div class="col-md-12">
-                                            <input type="text" name="fullName" placeholder="Name and Lastname..." class="form-control form-control-line">
+                                            <input type="text" name="fullName" placeholder="Name and Lastname..." class="form-control form-control-line" >
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">User Name*</label>
                                         <div class="col-md-12">
-                                            <input type="text" name="userName" placeholder="Username..." class="form-control form-control-line">
+                                            <input type="text" name="userName" placeholder="Username..." class="form-control form-control-line" >
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-md-12">Password*</label>
                                         <div class="col-md-12 d-flex">
-                                            <input type="password" value="" class="form-control form-control-line" name="password" id="myPass">
+                                            <input type="password" class="form-control form-control-line" name="password" id="myPass" >
                                             <div class="input-group-append">
                                                 <span class="input-group-text" onclick="password_show_hide();">
                                                   <i class="me-2 mdi mdi-eye" id="show_eye_pass"></i>
@@ -69,7 +69,7 @@
                                     <div class="form-group">
                                         <label class="col-md-12">Repeat Password*</label>
                                         <div class="col-md-12  d-flex">
-                                            <input type="password" value="" class="form-control form-control-line" name="repeatPassword" id="myrePass">
+                                            <input type="password" class="form-control form-control-line" name="repeatPassword" id="myrePass" >
                                             <span class="input-group-text" onclick="repassword_show_hide();">
                                                 <i class="me-2 mdi mdi-eye" id="show_eye_repass"></i>
                                                 <i class="me-2 mdi mdi-eye-off d-none" id="hide_eye_repass"></i>

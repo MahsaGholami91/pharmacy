@@ -1,3 +1,7 @@
+<?php session_start();
+ ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,12 +48,12 @@
                     </div>
 
                     </form>
-                        <?php if(!empty($msg)){
-                                    ?>
-                                    <p class="text-danger"><?php echo $msg ?></p>
+                        <?php if(!empty($_SESSION['error-msg'])){
+                            ?>
+                            <p class="text-danger"><?php echo $_SESSION['error-msg'] ?></p>
 
-                                    <?php
-                                } ?>
+                            <?php
+                        } ?>
 
                 </div>
                 </div>

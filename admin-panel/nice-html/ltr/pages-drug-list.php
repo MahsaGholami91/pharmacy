@@ -1,8 +1,7 @@
 <?php 
-    include "../../layout/header.php";
-    include "../../layout/menu.php" ;
-    include "../../includes/functions.php" ;
-
+   include "../../layout/header.php";
+   include "../../layout/menu.php";
+   include "../../includes/functions.php" ;
     getPermission($conn,'drug_list');
        
 ?>
@@ -54,6 +53,14 @@
                 <div class="row">
                     
                     <div class="col-lg-12 col-xlg-12">
+                    <?php
+                            if(!empty($_SESSION['error-msg'])){ ?>
+                            <div class="text-danger"><?php echo $_SESSION['error-msg']; ?></div>
+                            <?php     
+                                $_SESSION['error-msg'] = "";
+                            }else if (!empty($_SESSION['success-msg'])) { ?>
+                                <div class="text-success"><?php echo $_SESSION['success-msg']; ?></div>
+                             <?php $_SESSION['success-msg'] = ""; } ?>
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Drugs List</h4>
@@ -98,15 +105,11 @@
                                                 <td><?php echo $row['drugCount']; ?></td>
                                                 <td><?php echo $row['expireDate']; ?></td>
                                                 <td style="display: flex;gap: 10px;">
-                                                    <form action="pages-update-drug.php" method="POST">
-                                                        <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                                <a href="pages-update-drug.php?id=<?php echo $row['id']; ?>">
                                                         <button type="submit" class="btn btn-success text-white">Update</button>
-                                                    </form>
+                                                        </a>
                                                     <button type="button" class="btn btn-danger text-white" onclick="openDeleteModal(<?php echo $row['id']; ?>)">Delete</button>
-                                                    <!-- <form action="../../php/drugDelete.php" method="POST">
-                                                        <input type="hidden" name="id" value="<?php //echo $row['id']; ?>">
-                                                        <button type="submit" class="btn btn-danger text-white">Delete</button>
-                                                    </form> -->
+                                                   
                                                 </td>
                                                 
                                             </tr>

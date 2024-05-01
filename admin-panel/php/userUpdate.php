@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
 include "../includes/db.php";
 include "../includes/functions.php";
 if (isset($_POST['submitBtn'])) {
@@ -14,20 +16,28 @@ if (isset($_POST['submitBtn'])) {
     $updatedUserRole    = $_POST['role'];
     $hashedPwd = password_hash($updatedUserPass, PASSWORD_DEFAULT);
     
-    if(emptyInputSignin($updatedFullname, $updatedUserName, $updatedUserPass, $updatedUserRepass) !== false){
-        header("location: ../nice-html/ltr/pages-profile.php?error=emptyinput");
+    if(emptyInputSignin($updatedFullname, $updatedUserName, $updatedUserPass, $updatedUserRepass ,$updatedUserRole) !== false){
+        $_SESSION['error-msg'] = "Fill in the fields with stars";
+
+        header("location: ../nice-html/ltr/pages-profile.php");
         exit();
     }
     if(invalidUid($updatedUserName) !== false){
-        header("location: ../nice-html/ltr/pages-profile.php?error=invalidUid");
+        $_SESSION['error-msg'] = "username dosent valid";
+
+        header("location: ../nice-html/ltr/pages-profile.php");
         exit();
     }
     if(passwordMatch($updatedUserPass, $updatedUserRepass) !== false){
-        header("location: ../nice-html/ltr/pages-profile.php?error=passworddoesntmatch");
+        $_SESSION['error-msg'] = "password and repeat password dosent same!";
+
+        header("location: ../nice-html/ltr/pages-profile.php");
         exit();
     }
     if(uidExists($conn, $updatedUserName ) !== false){
-        header("location: ../nice-html/ltr/pages-profile.php?error=usernametaken");
+        $_SESSION['error-msg'] = "username exist!";
+
+        header("location: ../nice-html/ltr/pages-profile.php");
         exit();
     }
     $sql = "UPDATE `users` SET `fullname` = ?, `username` = ?, `password` = ?, `roleId` = ? WHERE id = $updatedUserId";
@@ -37,10 +47,13 @@ if (isset($_POST['submitBtn'])) {
 
         mysqli_stmt_execute($stmt);
 
-        echo "Successful Updated";
+        $_SESSION['success-msg'] = "user information changed!";
+        header("location: ../nice-html/ltr/pages-profile.php");
+        exit();
 
     } else {
-        echo "Updated was wrong";    
-}
+        $_SESSION['error-msg'] = "something was wrong!";
+        header("location: ../nice-html/ltr/pages-add-user.php");
+        exit();}
 }
 ?>

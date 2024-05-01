@@ -1,6 +1,7 @@
 <?php
   
-function checkInt($drugDose){
+function checkIntDose($drugDose){
+    // die($drugDose);
     if (!isset($drugDose) || !ctype_digit($drugDose)) {
         $result = true;
     }
@@ -10,7 +11,16 @@ function checkInt($drugDose){
     return $result;
 
 }
+function checkIntCount($drugCount){
+    if (!isset($drugCount) || !ctype_digit($drugCount)) {
+        $result = true;
+    }
+    else {
+        $result = false;
+    }
+    return $result;
 
+}
 function emptyInputSignin($fullName, $userName, $password, $passwordRepeat ,$role) {
     $result = true;
     if(empty($fullName) || empty($userName) || empty($password) || empty($passwordRepeat) || empty($role)){

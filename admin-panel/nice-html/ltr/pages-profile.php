@@ -1,28 +1,25 @@
 <?php     
     include "../../includes/functions.php" ;
-    session_start();
+    include "../../layout/header.php";
+    include "../../layout/menu.php" ;
 
 if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
     require_once "../../includes/db.php";
     $userId = $_SESSION['id'];
     $roleId = $_SESSION['roleId'];
-    $sql = "SELECT users.*, role.name AS role_name FROM `users` JOIN `role` ON users.roleId = role.id WHERE users.id = ? ";
+    $sql = "SELECT * FROM `users` WHERE users.id = ? ";
     $stmt = mysqli_stmt_init($conn);
     if (mysqli_stmt_prepare($stmt, $sql)) {
         mysqli_stmt_bind_param($stmt, "i", $userId);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
-        if ($row = mysqli_fetch_assoc($result)) {
-            $fullName = $row['fullname'];
-            $userName = $row['username'];
-            $password = $row['password'];
-            $role = $row['role_name'];
-            
-        }
+        $row = mysqli_fetch_assoc($result);
+            // var_dump($row);
+            // die;
+         
     }
 }
-    include "../../layout/header.php";
-    include "../../layout/menu.php" ;
+    
  ?>
         <div class="page-wrapper">
             
@@ -49,6 +46,14 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-xlg-12">
+                    <?php
+                            if(!empty($_SESSION['error-msg'])){ ?>
+                            <div class="text-danger"><?php echo $_SESSION['error-msg']; ?></div>
+                            <?php     
+                                $_SESSION['error-msg'] = "";
+                            }else if (!empty($_SESSION['success-msg'])) { ?>
+                                <div class="text-success"><?php echo $_SESSION['success-msg']; ?></div>
+                             <?php $_SESSION['success-msg'] = ""; } ?>
                         <div class="card">
                             <div class="card-body">
                                 <form class="form-horizontal form-material mx-2" action="../../php/userUpdate.php" method="post">
@@ -57,13 +62,13 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                                     <div class="form-group">
                                         <label class="col-md-12">Full Name</label>
                                         <div class="col-md-12">
-                                            <input type="text" name="fullName" placeholder="Name and Lastname..." class="form-control form-control-line" value="<?php echo $fullName; ?>">
+                                            <input type="text" name="fullName" placeholder="Name and Lastname..." class="form-control form-control-line" value="<?php if(!empty($row['fullname'])){ echo $row['fullname'];}; ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">User Name</label>
                                         <div class="col-md-12">
-                                            <input type="text" name="userName" placeholder="Username..." class="form-control form-control-line" value="<?php echo $userName; ?>">
+                                            <input type="text" name="userName" placeholder="Username..." class="form-control form-control-line" value="<?php if(!empty($row['username'])){ echo $row['username'];}; ?>">
                                         </div>
                                     </div>
 
@@ -97,15 +102,15 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                                                 require_once "../../includes/db.php";
 
                                                 ?>
-                                        <select name="role" >
-                                            <option value="<?php  echo $roleId ?>" selected><?php  echo $role ?></option>
+                                        <select name="role" class="form-select shadow-none form-control-line">
                                             <?php 
                                                 $roles = "SELECT * FROM `role`";
                         
                                                 $result = mysqli_query($conn,$roles);
-                                                while($row = mysqli_fetch_array($result)){
+                                                while($role = mysqli_fetch_array($result)){
                                             ?>
-                                            <option value="<?php  echo $row['id'] ?>"><?php  echo $row['name']?></option>
+
+                                            <option <?php if(!empty($row['roleId']) && $row['roleId'] == $role['id']){ ?> selected="selected" <?php  } ?> value="<?php  echo $role['id'] ?>"><?php  echo $role['name']?></option>
                                                 <?php   } ?>
                                         </select>
                                          
@@ -120,31 +125,57 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                             </div>
                         </div>
                     </div>
-                    <?php
-                        if (isset($_GET["error"])) {
-                            if ($_GET["error"] == "emptyinput") {
-                                echo "<p class='text-danger'>Fill in all fiels!<p>";
-                            }
-                            else if ($_GET["error"] == "invalidUid") {
-                                echo "<p class='text-danger'>Choose a proper username!<p>";
-                            }
-                            
-                            else if ($_GET["error"] == "passworddoesntmatch") {
-                                echo "<p class='text-danger'>Passwors doesn't match!<p>";
-                            }
-                            else if ($_GET["error"] == "usernametaken") {
-                                echo "<p class='text-danger'>Username allready taken!<p>";
-                            }
-                            else if ($_GET["error"] == "stmtfailed") {
-                                echo "<p class='text-danger'>Something went wring, try again!<p>";
-                            }
-                            else if ($_GET["error"] == "none") {
-                                echo "<p class='text-seccess'>Your data updated!<p>";
-                            }
-                        }
-                    ?>
+                    
                 </div>
                 
             </div>
             
-            <?php include "../../layout/footer.php" ?>
+            <footer class="footer text-center">
+                
+                </footer>
+                
+            </div>
+            
+        </div>
+          
+        <script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
+        <script src="../../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/extra-libs/sparkline/sparkline.js"></script>
+        <script src="../../dist/js/waves.js"></script>
+        <script src="../../dist/js/sidebarmenu.js"></script>
+        <script src="../../dist/js/custom.min.js"></script>
+        <script>
+            function password_show_hide() {
+                var x = document.getElementById("myPass");
+                var show_eye_pass = document.getElementById("show_eye_pass");
+                var hide_eye_pass = document.getElementById("hide_eye_pass");
+                hide_eye_pass.classList.remove("d-none");
+                if (x.type === "myPass") {
+                    x.type = "text";
+                    show_eye_pass.style.display = "none";
+                    hide_eye_pass.style.display = "block";
+                } else {
+                    x.type = "myPass";
+                    show_eye_pass.style.display = "block";
+                    hide_eye_pass.style.display = "none";
+                }
+            }
+            function repassword_show_hide() {
+                var x = document.getElementById("myrePass");
+                var show_eye_repass = document.getElementById("show_eye_repass");
+                var hide_eye_repass = document.getElementById("hide_eye_repass");
+                hide_eye_repass.classList.remove("d-none");
+                if (x.type === "myrePass") {
+                    x.type = "text";
+                    show_eye_repass.style.display = "none";
+                    hide_eye_repass.style.display = "block";
+                } else {
+                    x.type = "myrePass";
+                    show_eye_repass.style.display = "block";
+                    hide_eye_repass.style.display = "none";
+                }
+            }
+        </script>
+    </body>
+    
+    </html>

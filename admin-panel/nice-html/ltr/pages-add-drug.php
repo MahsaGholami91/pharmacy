@@ -40,7 +40,7 @@
                         <div class="text-danger"><?php echo $_SESSION['error-msg']; ?></div>
                         <?php     
                             $_SESSION['error-msg'] = "";
-                        }else { ?>
+                        }else if (!empty($_SESSION['success-msg'])) { ?>
                             <div class="text-success"><?php echo $_SESSION['success-msg']; ?></div>
                             <?php $_SESSION['success-msg'] = ""; } ?>
                         <div class="card">
@@ -49,29 +49,29 @@
                                     <div class="form-group">
                                         <label class="col-md-12">Name*</label>
                                         <div class="col-md-12">
-                                            <input type="text" name="drugName" placeholder="Drug Name..." class="form-control form-control-line">
+                                            <input type="text" name="drugName" placeholder="Drug Name..." class="form-control form-control-line" value="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">Dose*</label>
                                         <div class="col-md-12">
-                                            <input type="text" name="drugDose" placeholder="Drug Dose..." class="form-control form-control-line">
+                                            <input type="text" name="drugDose" placeholder="Drug Dose..." class="form-control form-control-line" value="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">Count*</label>
                                         <div class="col-md-12">
-                                            <input type="text" name="drugCount" placeholder="Drug Count..." class="form-control form-control-line">
+                                            <input type="text" name="drugCount" placeholder="Drug Count..." class="form-control form-control-line" value="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Description</label>
-                                        <textarea name="drugDesc" class="form-control" rows="5"></textarea>
+                                        <textarea name="drugDesc" class="form-control" rows="5"  value=""></textarea>
                                     </div>
                                     
                                     <div class="form-group">
                                         <label>Expire Date*</label>
-                                        <input name="drugExp" id="datepicker" width="276" />
+                                        <input name="drugExp" id="datepicker" width="276" value=""/>
                                     </div>
                                     
                                     <div class="form-group">

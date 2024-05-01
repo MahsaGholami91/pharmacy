@@ -92,6 +92,7 @@
                 <div class="row">
                     
                     <div class="col-lg-12 col-xlg-12">
+                    
                         <div class="card">
                             <div class="card-body">
                                 
@@ -115,6 +116,14 @@
                 <div class="row">
                     
                     <div class="col-lg-12 col-xlg-12">
+                        <?php
+                            if(!empty($_SESSION['error-msg'])){ ?>
+                            <div class="text-danger"><?php echo $_SESSION['error-msg']; ?></div>
+                            <?php     
+                                $_SESSION['error-msg'] = "";
+                            }else if (!empty($_SESSION['success-msg'])) { ?>
+                                <div class="text-success"><?php echo $_SESSION['success-msg']; ?></div>
+                             <?php $_SESSION['success-msg'] = ""; } ?>
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Drugs List</h4>
@@ -156,10 +165,7 @@
                                                 <td style="vertical-align: middle;"><?php echo $row['analyzed']; ?></td>
                                                 <td style="vertical-align: middle;">
                                                 <button type="button" class="btn btn-danger text-white" onclick="openDeleteModal(<?php echo $row['id']; ?>)">Delete</button>
-                                                    <!-- <form action="../../php/textDelete.php" method="POST">
-                                                        <input type="hidden" name="id" value="<?php //echo $row['id']; ?>">
-                                                        <button type="submit" class="btn btn-danger text-white">Delete</button>
-                                                    </form> -->
+                                             
                                                 </td>
                                             </tr>
                                                 <?php
