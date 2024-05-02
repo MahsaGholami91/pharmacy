@@ -37,11 +37,16 @@
         }
         $fileContent .=  "Spaces: " . $counts["spaces"];
         $filename = md5($text) . "_result.txt"; 
-        $file = fopen($filename, "w");
+
+        $uploadDirectory = "/pharmacy/admin-panel/uploads/";
+        $finalPath = $_SERVER['DOCUMENT_ROOT'] . $uploadDirectory . $filename;
+        $file = fopen($finalPath, "w");
+
         if ($file) {
             fwrite($file, $fileContent);
             fclose($file);
-            return $filename;
+            return $finalPath;
+          
         } else {
             return false;
         }
@@ -60,6 +65,9 @@
             $success = "your text saved";
             
             $downloadLink = createResultFile($text, $counts);
+            // var_dump($downloadLink);
+            // die;
+            
         }        
     }
 
