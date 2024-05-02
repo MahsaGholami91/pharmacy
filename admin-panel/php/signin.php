@@ -47,8 +47,8 @@
         
     }
     else {
-        echo "gavi";
-        // header("Location: ../signIn.php");
+        $_SESSION['error-msg'] = "something was wrong!";
+        header("location: ../nice-html/ltr/pages-add-user.php");
         exit();
     }
 

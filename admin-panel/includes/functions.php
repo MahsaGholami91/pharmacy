@@ -91,7 +91,7 @@ function uidExists($conn, $userName) {
 function createUser($conn, $fullName, $userName, $password, $role) {
     $sql = "INSERT INTO `users` (`fullname`, `username`, `password`, `roleId`) VALUES (? , ? ,? ,?);";
     $stmt = mysqli_stmt_init($conn);
-    
+  
     if(!mysqli_stmt_prepare($stmt,$sql) ){
         return false;
     }
@@ -144,7 +144,6 @@ function addText($conn, $beforeAna, $afterAna,$userId) {
         return false;
     }
      mysqli_stmt_bind_param($stmt,"ssi",$beforeAna, $afterAna,$userId);
-
      mysqli_stmt_execute($stmt);
      mysqli_stmt_close($stmt);
     return true;
@@ -168,8 +167,7 @@ function getPermission($conn, $permission) {
             exit;
         }
     } else {
-
-        header("location: ../../login-page/login.php");
+        header("location: ../../../login-page/login.php");
         exit;
     }
 }

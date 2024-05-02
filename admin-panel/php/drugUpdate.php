@@ -41,7 +41,7 @@ if (isset($_POST['submitBtn'])) {
 
         mysqli_stmt_execute($stmt);
         $_SESSION['success-msg'] = "*Your update was successful.";
-        header("location: ../nice-html/ltr/pages-update-drug.php?id=$updatedDrugId");
+        header("location: ../nice-html/ltr/pages-drug-list.php");
 
     } else {
         $_SESSION['error-msg'] = "*something was wrong in your update!";

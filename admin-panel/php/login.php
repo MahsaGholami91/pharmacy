@@ -13,7 +13,6 @@ if(isset($_POST["submit"])) {
         $row = mysqli_fetch_assoc($result);
         $check = password_verify($password , $row['password']);
         if($check){
-            
             $_SESSION['username'] = $username;
             $_SESSION['id'] = $row['id'];
             $_SESSION['roleId'] = $row['roleId'];
@@ -23,15 +22,13 @@ if(isset($_POST["submit"])) {
         else {
 
             $_SESSION['error-msg'] = "*Wrong username or password!";
-            // echo $_SESSION['error-msg'];
-            // die;
             header("location: ../../login-page/login.php");
-            // exit();
+            exit();
         }
     } else {
             $_SESSION['error-msg'] = "*something was wrong, user not found!";
             header("location: ../../login-page/login.php");
-            // exit();
+            exit();
     }
 }
 ?>
