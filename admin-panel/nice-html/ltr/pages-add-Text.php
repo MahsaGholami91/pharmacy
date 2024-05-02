@@ -30,6 +30,23 @@
         return array("words" => $wordCounts, "spaces" => $spaceCount);
     }
 
+    function createResultFile($text, $counts) {
+        $fileContent = '';
+        foreach ($counts["words"] as $word => $count) {
+            $fileContent .= "$word: $count\n";
+        }
+        $fileContent .=  "Spaces: " . $counts["spaces"];
+        $filename = md5($text) . "_result.txt"; 
+        $file = fopen($filename, "w");
+        if ($file) {
+            fwrite($file, $fileContent);
+            fclose($file);
+            return $filename;
+        } else {
+            return false;
+        }
+    }
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $text = $_POST["text"];
         $counts = countWordsAndSpaces($text);
@@ -37,14 +54,17 @@
         foreach ($counts["words"] as $word => $count) {
             $str .= "$word: $count".", ";
         }
-
         $str .=  "Spaces: " . $counts["spaces"] ;
-        
-       $result = addText($conn, $text, $str,$_SESSION['id']);
+        $result = addText($conn, $text, $str,$_SESSION['id']);
         if($result){
             $success = "your text saved";
+            
+            $downloadLink = createResultFile($text, $counts);
         }        
     }
+
+   
+
 ?>
         <div class="modal" id="deleteModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -165,7 +185,14 @@
                                                 <td style="vertical-align: middle;"><?php echo $row['analyzed']; ?></td>
                                                 <td style="vertical-align: middle;">
                                                 <button type="button" class="btn btn-danger text-white" onclick="openDeleteModal(<?php echo $row['id']; ?>)">Delete</button>
-                                             
+                                                <?php 
+                                                    $downloadLink = createResultFile($row['text'], countWordsAndSpaces($row['text']));
+                                                    if ($downloadLink): ?>
+                                                        <div class="download-link">
+                                                            <a href="<?php echo $downloadLink; ?>" download>Download Result File</a>
+                                                        </div>
+                                                    <?php endif; ?>
+
                                                 </td>
                                             </tr>
                                                 <?php

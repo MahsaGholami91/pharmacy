@@ -12,7 +12,7 @@
                         </a>
                     </li>
                     <?php
-                        $query = "SELECT * FROM `menu_item` JOIN `role_permission` on `menu_item`.`permissionId`=`role_permission`.`permissionId` WHERE `role_permission`.`roleId`= '". $_SESSION['roleId'] ."';  ";
+                        $query = "SELECT * FROM `menu_item` JOIN `role_permission` on `menu_item`.`permissionId`=`role_permission`.`permissionId` WHERE `menu_item`.`priority`= 1 AND `role_permission`.`roleId`= '". $_SESSION['roleId'] ."';";
                         $result = mysqli_query($conn, $query);
                         foreach($result as $row){
                     ?>
