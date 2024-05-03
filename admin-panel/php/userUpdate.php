@@ -1,12 +1,11 @@
 <?php
-    session_start();
+    // session_start();
 
 include "../includes/db.php";
 include "../includes/functions.php";
 if (isset($_POST['submitBtn'])) {
-    // var_dump($_POST);
+    
 
-    // die;
     
     $updatedUserId      = $_POST['userId'];
     $updatedFullname    = $_POST['fullName'];

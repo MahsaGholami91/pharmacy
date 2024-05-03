@@ -1,6 +1,6 @@
 <?php include "../includes/db.php";
 
-session_start();
+// session_start();
 
     if(isset($_POST['id'])){
         $_SESSION['error-msg'] = "";

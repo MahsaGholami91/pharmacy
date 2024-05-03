@@ -1,11 +1,10 @@
 <?php
-session_start();
+// session_start();
 
 include "../includes/db.php";
 require_once "../includes/functions.php";
 
 if (isset($_POST['submitBtn'])) {
-    // var_dump($_POST);
     $_SESSION['error-msg'] = "";
     $_SESSION['success-msg']= "";
     $updatedDrugId      = $_POST['drugId'];

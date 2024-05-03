@@ -2,7 +2,57 @@
     include "../../includes/functions.php" ;
     include "../../layout/header.php";
     include "../../layout/menu.php" ;
-
+    include "../includes/db.php";
+    if (isset($_POST['submitBtn'])) {
+        
+        $updatedUserId      = $_POST['userId'];
+        $updatedFullname    = $_POST['fullName'];
+        $updatedUserName    = $_POST['userName'];
+        $updatedUserPass    = $_POST['password'];
+        $updatedUserRepass    = $_POST['repeatPassword'];
+        $updatedUserRole    = $_POST['role'];
+        $hashedPwd = password_hash($updatedUserPass, PASSWORD_DEFAULT);
+        
+        if(emptyInputSignin($updatedFullname, $updatedUserName, $updatedUserPass, $updatedUserRepass ,$updatedUserRole) !== false){
+            $_SESSION['error-msg'] = "Fill in the fields with stars";
+    
+            header("location: ../nice-html/ltr/pages-profile.php");
+            exit();
+        }
+        if(invalidUid($updatedUserName) !== false){
+            $_SESSION['error-msg'] = "username dosent valid";
+    
+            header("location: ../nice-html/ltr/pages-profile.php");
+            exit();
+        }
+        if(passwordMatch($updatedUserPass, $updatedUserRepass) !== false){
+            $_SESSION['error-msg'] = "password and repeat password dosent same!";
+    
+            header("location: ../nice-html/ltr/pages-profile.php");
+            exit();
+        }
+        if(uidExists($conn, $updatedUserName ) !== false){
+            $_SESSION['error-msg'] = "username exist!";
+    
+            header("location: ../nice-html/ltr/pages-profile.php");
+            exit();
+        }
+        $sql = "UPDATE `users` SET `fullname` = ?, `username` = ?, `password` = ?, `roleId` = ? WHERE id = $updatedUserId";
+        $stmt = mysqli_stmt_init($conn);
+        if (mysqli_stmt_prepare($stmt, $sql)) {
+            mysqli_stmt_bind_param($stmt, "sssi", $updatedFullname, $updatedUserName, $hashedPwd, $updatedUserRole);
+    
+            mysqli_stmt_execute($stmt);
+    
+            $_SESSION['success-msg'] = "user information changed!";
+            header("location: ../nice-html/ltr/pages-profile.php");
+            exit();
+    
+        } else {
+            $_SESSION['error-msg'] = "something was wrong!";
+            header("location: ../nice-html/ltr/pages-add-user.php");
+            exit();}
+    }
 if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
     require_once "../../includes/db.php";
     $userId = $_SESSION['id'];
@@ -14,9 +64,7 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         $row = mysqli_fetch_assoc($result);
-            // var_dump($row);
-            // die;
-         
+        
     }
 }
     
@@ -99,7 +147,6 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                                         <label class="col-sm-12">Select Role</label>
                                         <div class="col-sm-12">
                                             <?php 
-                                                require_once "../../includes/db.php";
 
                                                 ?>
                                         <select name="role" class="form-select shadow-none form-control-line">
