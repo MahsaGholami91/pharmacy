@@ -1,7 +1,8 @@
 <?php
+ob_start();
 
-include "functions.php";
 session_start();
+
 function headerLayout(){
     
 
@@ -83,7 +84,7 @@ function headerLayout(){
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="pages-profile.php"><i class="ti-user me-1 ms-1"></i> My Profile</a>
-                <a class="dropdown-item" href="../../php/logout.php"><i class="ti-user me-1 ms-1"></i>
+                <a class="dropdown-item" href="?logout=logout"><i class="ti-user me-1 ms-1"></i>
                 Log Out</a>
                 </ul>
                 </li>
@@ -124,14 +125,13 @@ function footerLayout(){
 }
 
 function menuItem(){
-    include "db.php";
-
+    $conn=dbConnect();
     echo '<aside class="left-sidebar" data-sidebarbg="skin5">
         <div class="scroll-sidebar">
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
                 <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.php" aria-expanded="false">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="?menu=" aria-expanded="false">
                             <i class="mdi mdi-av-timer"></i>
                             <span class="hide-menu">Dashboard</span>
                         </a>
@@ -142,7 +142,7 @@ function menuItem(){
                     
 
                 echo    '<li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="?page='. $row['url'].'" aria-expanded="false">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="?menu='. $row['url'].'" aria-expanded="false">
                             <i class="mdi mdi-account-network"></i>';
                         echo '<span class="hide-menu">' .  $row['name'] .' </span>
                         </a>
@@ -160,7 +160,7 @@ function menuItem(){
 
 function dashboard(){
 
-    include "db.php";
+    $conn=dbConnect();
 
 
     $query = "SELECT * FROM `role` WHERE `id`= '". $_SESSION['roleId'] ."';  ";
@@ -195,7 +195,7 @@ function dashboard(){
 }
 
 function addTextForm() {
-    include "db.php";
+    $conn=dbConnect();
     if (isset($_POST["submitBtn"])) {
         $beforeAna   = $_POST['text'];
         $afterAna   = $_POST['textAnalyzed'];
@@ -365,15 +365,15 @@ function addTextForm() {
                             $totalPages = ceil($totalCount / $recordsPerPage);
 
                             if ($page > 1) {
-                                echo '<a href="?page=' . ($page - 1) . '" class="page-link">&laquo; Previous</a>';
+                                echo '<a href="?menu=pages-add-Text.php&page=' . ($page - 1) . '" class="page-link">&laquo; Previous</a>';
                             }
 
                             for ($i = 1; $i <= $totalPages; $i++) {
-                                echo '<a href="?page=' . $i . '" class="page-link">' . $i . '</a>';
+                                echo '<a href="?menu=pages-add-Text.php&page=' . $i . '" class="page-link">' . $i . '</a>';
                             }
 
                             if ($page < $totalPages) {
-                                echo '<a href="?page=' . ($page + 1) . '" class="page-link">Next &raquo;</a>';
+                                echo '<a href="menu=pages-add-Text.php&?page=' . ($page + 1) . '" class="page-link">Next &raquo;</a>';
                             }
                             
                         echo '</div>
@@ -431,9 +431,8 @@ function createResultFile($text, $counts) {
 }
 
 function addDrugForm() {
-    require_once "db.php";
-    headerLayout();
-    menuItem();
+    $conn=dbConnect();
+   
     getPermission($conn,'add_drug');
 
     if (isset($_POST["submitBtn"])) {
@@ -446,28 +445,28 @@ function addDrugForm() {
 
         if(emptyInputDrugs($drugName, $drugDose, $drugCount, $drugExp, $drugCat) !== false){
             $_SESSION['error-msg'] = "Fill in the fields with stars";
-            header("location: ../nice-html/ltr/pages-add-drug.php");
-            exit();
+            // header("location: ../nice-html/ltr/pages-add-drug.php");
+            // exit();
         }
-        // if(checkIntDose($drugDose) !== false){
-        //     $_SESSION['error-msg'] = "Dose must be a number";
-        //     header("location: ../nice-html/ltr/pages-add-drug.php");
-        //     exit();
-        // }
+        if(checkIntDose($drugDose) !== false){
+            $_SESSION['error-msg'] = "Dose must be a number";
+            // header("location: ../nice-html/ltr/pages-add-drug.php");
+            // exit();
+        }
         if(checkIntCount($drugCount) !== false){
             $_SESSION['error-msg'] = "Count must be a number";
-            header("location: ../nice-html/ltr/pages-add-drug.php");
-            exit();
+            // header("location: ../nice-html/ltr/pages-add-drug.php");
+            // exit();
         }
 
         if(addOrUpdateDrug($conn, $drugName, $drugDose, $drugCount, $drugDesc, $drugExp, $drugCat)){
             $_SESSION['success-msg'] = "Drug added";
-            header("Location: ../nice-html/ltr/pages-add-drug.php");
-            exit();
+            // header("Location: ../nice-html/ltr/pages-add-drug.php");
+            // exit();
         } else {
             $_SESSION['error-msg'] = "Something went wrong!";
-            header("location: ../nice-html/ltr/pages-add-user.php");
-            exit();
+            // header("location: ../nice-html/ltr/pages-add-user.php");
+            // exit();
         }
     }
 
@@ -559,34 +558,23 @@ function addDrugForm() {
                         </div>
                     </div>
                 </div>
-                <footer class="footer text-center">
-
-        </footer>
-    </div>
-
-    </div>';
+         
+    ';
     echo '<script>'."
         $('#datepicker').datepicker({
             uiLibrary: 'bootstrap5'
         });"
    .' </script>';
-   echo '<script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="../../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/extra-libs/sparkline/sparkline.js"></script>
-    <script src="../../dist/js/waves.js"></script>
-    <script src="../../dist/js/sidebarmenu.js"></script>
-    <script src="../../dist/js/custom.min.js"></script>
-    </body>
-
-    </html>';
+  
 }
 
 function addUserForm() {
-    require_once "db.php";
-  ;
+    $conn=dbConnect();
+  
     getPermission($conn, 'add_user');
-    if (isset($_POST["submitBtn"])) {
-
+    if (isset($_POST["submitBtn"]) && !empty($_POST["submitBtn"])) {
+//         var_dump($_POST["submitBtn"]);
+// die("dddddd");
         $fullName = $_POST['fullName'];
         $userName = $_POST['userName'];
         $password = $_POST['password'];
@@ -597,34 +585,29 @@ function addUserForm() {
         if(emptyInputSignin($fullName, $userName, $password, $repeatPassword ,$role) !== false){
 
             $_SESSION['error-msg'] = "Fill in the fields with stars";
-            header("location: ../nice-html/ltr/pages-add-user.php");
-            exit();
-        }
-        if(invalidUid($username) !== false){
+            // header("location: ../nice-html/ltr/pages-add-user.php");
+            // exit();
+        }elseif(invalidUid($userName) !== false){
             $_SESSION['error-msg'] = "username dosent valid";
-            header("location: ../nice-html/ltr/pages-add-user.php");
-            exit();
-        }
-        if(passwordMatch($password, $repeatPassword) !== false){
+            // header("location: ../nice-html/ltr/pages-add-user.php");
+            // exit();
+        }elseif(passwordMatch($password, $repeatPassword) !== false){
             $_SESSION['error-msg'] = "password and repeat password dosent same!";
-            header("location: ../nice-html/ltr/pages-add-user.php");
-            exit();
-        }
-        if(uidExists($conn, $username ) !== false){
+            // header("location: ../nice-html/ltr/pages-add-user.php");
+            // exit();
+        }elseif(uidExists($conn, $userName ) !== false){
             $_SESSION['error-msg'] = "username exist!";
-            header("location: ../nice-html/ltr/pages-add-user.php");
-            exit();
-        }
-
-        if(createUser($conn,$fullName, $userName, $password, $role)){
+            // header("location: ../nice-html/ltr/pages-add-user.php");
+            // exit();
+        }elseif(createUser($conn,$fullName, $userName, $password, $role)){
             $_SESSION['success-msg'] = "user added!";
-            header("location: ../nice-html/ltr/pages-add-user.php");
-            exit();
+            // header("location: ../nice-html/ltr/pages-add-user.php");
+            // exit();
 
         }else {
             $_SESSION['error-msg'] = "something was wrong!";
-            header("location: ../nice-html/ltr/pages-add-user.php");
-            exit();
+            // header("location: ../nice-html/ltr/pages-add-user.php");
+            // exit();
         }
 
     }
@@ -665,13 +648,21 @@ function addUserForm() {
                                 <div class="form-group">
                                     <label class="col-md-12">Full Name*</label>
                                     <div class="col-md-12">
-                                        <input type="text" name="fullName" placeholder="Name and Lastname..." class="form-control form-control-line" >
+                                        <input type="text" name="fullName" placeholder="Name and Lastname..." class="form-control form-control-line" value="';
+                                        if(!empty($_POST['fullName'])){
+                                            echo $_POST['fullName'];
+                                        }
+                                        echo '">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">User Name*</label>
                                     <div class="col-md-12">
-                                        <input type="text" name="userName" placeholder="Username..." class="form-control form-control-line" >
+                                        <input type="text" name="userName" placeholder="Username..." class="form-control form-control-line" value="';
+                                        if(!empty($_POST['userName'])){
+                                            echo $_POST['userName'];
+                                        }
+                                        echo '">
                                     </div>
                                 </div>
 
@@ -715,7 +706,7 @@ function addUserForm() {
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button name="submitBtn" class="btn btn-success text-white">Add User</button>
+                                        <button name="submitBtn" class="btn btn-success text-white" value="submit">Add User</button>
                                     </div>
                                 </div>
                             </form>
@@ -725,20 +716,8 @@ function addUserForm() {
             </div>
         </div>
 
-        <footer class="footer text-center">
-            
-        </footer>
-
-    </div>
-
-    </div>
-
-    <script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="../../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/extra-libs/sparkline/sparkline.js"></script>
-    <script src="../../dist/js/waves.js"></script>
-    <script src="../../dist/js/sidebarmenu.js"></script>
-    <script src="../../dist/js/custom.min.js"></script>';
+  
+    ';
     echo '<script>'.'
         function password_show_hide() {
             var x = document.getElementById("myPass");
@@ -771,14 +750,12 @@ function addUserForm() {
             }
         }
    ' .'</script>
-    </body>
-
-    </html>';
+  ';
 }
 
 function drugListForm(){
   
-    require_once "db.php";
+    $conn=dbConnect();
 
     getPermission($conn,'drug_list');
    
@@ -895,7 +872,7 @@ function drugListForm(){
                                             <td>'. $row['drugCount'].'</td>
                                             <td>'. $row['expireDate'].'</td>
                                             <td style="display: flex;gap: 10px;">
-                                            <a href="pages-update-drug.php?id='.$row['id'].'">
+                                            <a href="?menu=pages-update-drug.php&id='.$row['id'].'">
                                                     <button type="submit" class="btn btn-success text-white">Update</button>
                                                     </a>
                                                 <button type="button" class="btn btn-danger text-white" onclick="openDeleteModal('.$row['id'].')">Delete</button>
@@ -933,12 +910,11 @@ function drugListForm(){
                 </div>
             </div>
         </div>';
-        // <?php include "../../layout/footer.php" 
 }
 
 function updateUserForm(){
 
-    include "db.php";
+    $conn=dbConnect();
     if (isset($_POST['submitBtn'])) {
         
         $updatedUserId      = $_POST['userId'];
@@ -1113,21 +1089,9 @@ function updateUserForm(){
                 </div>
                 
             </div>
-            
-            <footer class="footer text-center">
-                
-                </footer>
-                
-            </div>
-            
-        </div>
+
           
-        <script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
-        <script src="../../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="../../assets/extra-libs/sparkline/sparkline.js"></script>
-        <script src="../../dist/js/waves.js"></script>
-        <script src="../../dist/js/sidebarmenu.js"></script>
-        <script src="../../dist/js/custom.min.js"></script>
+
         <script>
             function password_show_hide() {
                 var x = document.getElementById("myPass");
@@ -1160,18 +1124,13 @@ function updateUserForm(){
                 }
             }
         </script>
-    </body>
-    
-    </html>';
+    ';
 }
 
 function updateDrugForm(){
-    require_once "db.php";
+    $conn=dbConnect();
   
-    // include "../../includes/functions.php" ;
-
-    $permission = 'drug_update';
-    getPermission($conn,$permission);
+    getPermission($conn,'drug_update');
 
     if (!empty($_GET['id'])) {
         $drugId = $_GET['id'];
@@ -1182,6 +1141,7 @@ function updateDrugForm(){
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
             $row = mysqli_fetch_assoc($result);
+            // var_dump($row);
         }
     }
 
@@ -1200,19 +1160,19 @@ function updateDrugForm(){
 
         if(emptyInputDrugs($updatedDrugName, $updatedDrugDose, $updatedDrugCount, $updatedDrugExp, $updatedDrugCat) !== false){
             $_SESSION['error-msg'] = "Fill in the fields with stars";
-            header("location: ../nice-html/ltr/pages-update-drug.php?id=$updatedDrugId");
-            exit();
+            // header("location: ../nice-html/ltr/?menu=pages-update-drug.php&id=$updatedDrugId");
+            // exit();
         } 
 
-        // if(checkIntDose($updatedDrugDose) !== false){
-        //     $_SESSION['error-msg'] = "Dos must be number";
-        //     header("location: ../nice-html/ltr/pages-update-drug.php?id=$updatedDrugId");
-        //     exit();
-        // } 
+        if(checkIntDose($updatedDrugDose) !== false){
+            $_SESSION['error-msg'] = "Dos must be number";
+            // header("location: ../nice-html/ltr/?menu=pages-update-drug.php&id=$updatedDrugId");
+            // exit();
+        } 
         if(checkIntCount($updatedDrugCount) !== false){
             $_SESSION['error-msg'] = "Count must be number";
-            header("location: ../nice-html/ltr/pages-update-drug.php?id=$updatedDrugId");
-            exit();
+            // header("location: ../nice-html/ltr/?menu=pages-update-drug.php&id=$updatedDrugId");
+            // exit();
         } 
 
         $sql = "UPDATE `drugs` SET `name` = ?, `dose` = ?, `drugCount` = ?, `description` = ?, `expireDate` = ?, `drugCat` = ? WHERE id = $updatedDrugId";
@@ -1222,11 +1182,11 @@ function updateDrugForm(){
 
             mysqli_stmt_execute($stmt);
             $_SESSION['success-msg'] = "*Your update was successful.";
-            header("location: ../nice-html/ltr/pages-drug-list.php");
+            header("location: ?menu=pages-drug-list.php");
 
         } else {
             $_SESSION['error-msg'] = "*something was wrong in your update!";
-            header("location: ../nice-html/ltr/pages-update-drug.php?id=$updatedDrugId");
+            // header("location: ../nice-html/ltr/?menu=pages-update-drug.php&id=$updatedDrugId");
         }
     } 
         
@@ -1263,16 +1223,16 @@ function updateDrugForm(){
                             $_SESSION['success-msg'] = ""; } 
                     echo  '<div class="card">
                             <div class="card-body">
-                                <form class="form-horizontal form-material mx-2" action="../../php/drugUpdate.php" method="post">
+                                <form class="form-horizontal form-material mx-2" action="" method="post">
                                 <input type="hidden" name="drugId" value="'. $drugId .'">';
                                 echo '<div class="form-group">
                                         <label class="col-md-12">*Name</label>
                                         <div class="col-md-12">
                                             <input type="text" name="drugName" placeholder="Drug Name..." class="form-control form-control-line" value="';
                                             if(!empty($row['name'])){ 
-                                                $row['name'];
+                                              echo  $row['name'];
                                             }
-                                                '">
+                                                echo '">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -1280,8 +1240,9 @@ function updateDrugForm(){
                                         <div class="col-md-12">
                                             <input type="text" name="drugDose" placeholder="Drug Dose..." class="form-control form-control-line" value="';
                                             if(!empty($row['dose'])){ 
-                                                $row['dose'];
-                                                }'">
+                                                echo   $row['dose'];
+                                                }
+                                                echo'">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -1289,25 +1250,27 @@ function updateDrugForm(){
                                         <div class="col-md-12">
                                             <input type="text" name="drugCount" placeholder="Drug Count..." class="form-control form-control-line" value="';
                                             if(!empty($row['drugCount'])){  
-                                                $row['drugCount'];
-                                                }'">
+                                                echo $row['drugCount'];
+                                                }
+                                                echo'">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Description</label>
                                         <textarea name="drugDesc" class="form-control" rows="5" >';
                                          if(!empty($row['description'])){  
-                                            $row['description'];
+                                            echo  $row['description'];
                                         }
-                                        '</textarea>
+                                        echo'</textarea>
                                     </div>
                                     
                                     <div class="form-group">
                                         <label>*Expire Date</label>
                                         <input name="drugExp" id="datepicker" width="276" value="';
                                         if(!empty($row['expireDate'])){
-                                            $row['expireDate'];}
-                                            '"/>
+                                            echo  $row['expireDate'];
+                                        }
+                                        echo    '"/>
                                     </div>
 
                                     <div class="form-group">
@@ -1318,13 +1281,11 @@ function updateDrugForm(){
                                             $result = mysqli_query($conn,$categories);
                                             while($category = mysqli_fetch_array($result)){
                                         
-                                        echo '<option'; if(!empty($row['drugCat']) && $row['drugCat'] == $category['id']){ 
-                                            echo 'selected="selected"'; 
-                                            } 'value="';
-                                            $category['id'];
-                                            echo  '">';
-                                            $category['name'];
-                                            echo '</option>';
+                                        echo '<option ';
+                                        if(!empty($row['drugCat']) && $row['drugCat'] == $category['id']){ 
+                                            echo' selected="selected"';
+                                          } 
+                                          echo'value="' . $category['id'] .'">' .  $category['name'] . '</option>';
                                          } 
                                          echo '</select>
 
@@ -1354,30 +1315,203 @@ function updateDrugForm(){
                         }
                     
             echo    '</div>
-            </div>
-            
-            <footer class="footer text-center">
-               
-            </footer>
-            
-        </div>
-        
-    </div>';
+            </div>'
+    ;
     
     echo '<script>'."
     $('#datepicker').datepicker({
         uiLibrary: 'bootstrap5'
     });"
     .' </script>';
-    echo    '<script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
-        <script src="../../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="../../assets/extra-libs/sparkline/sparkline.js"></script>
-        <script src="../../dist/js/waves.js"></script>
-        <script src="../../dist/js/sidebarmenu.js"></script>
-        <script src="../../dist/js/custom.min.js"></script>
-    </body>
+    
+}
 
-    </html>';
+
+
+function checkIntDose($drugDose){
+    // die($drugDose);
+    if (!isset($drugDose) || !ctype_digit($drugDose)) {
+        $result = true;
+    }
+    else {
+        $result = false;
+    }
+    return $result;
+
+}
+function checkIntCount($drugCount){
+    if (!isset($drugCount) || !ctype_digit($drugCount)) {
+        $result = true;
+    }
+    else {
+        $result = false;
+    }
+    return $result;
+
+}
+function emptyInputSignin($fullName, $userName, $password, $passwordRepeat ,$role) {
+    $result = true;
+    if(empty($fullName) || empty($userName) || empty($password) || empty($passwordRepeat) || empty($role)){
+        $result = true;
+    }
+    else {
+        $result = false;
+    }
+    return $result;
+}
+ 
+function emptyInputDrugs($drugName, $drugDose, $drugCount, $drugExp, $drugCat) {
+    $result=true;
+    if(empty($drugName) || empty($drugDose) || empty($drugCount) || empty($drugExp) || empty($drugCat)){
+        $result = true;
+    }
+    else {
+        $result = false;
+    }
+ 
+    return $result;
+}
+
+function invalidUid($userName) {
+    $result=true;
+    if(!preg_match("/^[a-zA-Z0-9]*$/", $userName)){
+        $result = true;
+    }
+    else {
+        $result =false;
+    }
+    return $result;
+}
+
+function passwordMatch($password, $passwordRepeat) {
+    $result =true;
+    if($password !== $passwordRepeat){
+        $result = true;
+    }
+    else {
+        $result =false;
+    }
+    return $result;
+}
+
+function uidExists($conn, $userName) {
+    $sql = "SELECT * FROM users WHERE username = ? ;";
+    $stmt = mysqli_stmt_init($conn);
+   
+    if(!mysqli_stmt_prepare($stmt,$sql) ){
+        return false;
+    }
+    mysqli_stmt_bind_param($stmt,"s",$userName);
+    mysqli_stmt_execute($stmt);
+    
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if($row = mysqli_fetch_assoc($resultData)){
+        return $row;
+    }
+    else {
+        $result =false;
+        return $result;
+    }
+    mysqli_stmt_close($stmt);
+}
+
+function createUser($conn, $fullName, $userName, $password, $role) {
+    $sql = "INSERT INTO `users` (`fullname`, `username`, `password`, `roleId`) VALUES (? , ? ,? ,?);";
+    $stmt = mysqli_stmt_init($conn);
+  
+    if(!mysqli_stmt_prepare($stmt,$sql) ){
+        return false;
+    }
+    $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+     mysqli_stmt_bind_param($stmt,"sssi",$fullName, $userName, $hashedPwd, $role);
+     mysqli_stmt_execute($stmt);
+     mysqli_stmt_close($stmt);
+     return true;
+}
+
+function addOrUpdateDrug($conn, $drugName, $drugDose, $drugCount, $drugDesc, $drugExp, $drugCat) {
+    $sql = "SELECT * FROM `drugs` WHERE `name` = ? AND `dose` = ? AND `expireDate` = ? AND `drugCat` = ?";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        return false;
+    }
+    mysqli_stmt_bind_param($stmt, "siss", $drugName, $drugDose, $drugExp, $drugCat);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_store_result($stmt);
+    $rowCount = mysqli_stmt_num_rows($stmt);
+    mysqli_stmt_close($stmt);
+    if ($rowCount > 0) {
+        $sql = "UPDATE `drugs` SET `drugCount` = `drugCount` + ? WHERE `name` = ? AND `dose` = ? AND `expireDate` = ? AND `drugCat` = ?";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            return false;
+        }
+        mysqli_stmt_bind_param($stmt, "isiss", $drugCount, $drugName, $drugDose, $drugExp, $drugCat);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        return true; 
+    } else {
+        $sql = "INSERT INTO drugs (`name`, `dose`, `expireDate`, `drugCat`, `drugCount`, `description`) VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            return false;
+        }
+        mysqli_stmt_bind_param($stmt, "sisiis", $drugName, $drugDose, $drugExp, $drugCat, $drugCount, $drugDesc);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        return true; 
+    }
+}
+
+function addText($conn, $beforeAna, $afterAna,$userId) {
+    $sql = "INSERT INTO `text` (`text`, `analyzed`, `userId`) VALUES (? , ? ,?);";
+    $stmt = mysqli_stmt_init($conn);
+   
+    if(!mysqli_stmt_prepare($stmt,$sql) ){
+        return false;
+    }
+     mysqli_stmt_bind_param($stmt,"ssi",$beforeAna, $afterAna,$userId);
+     mysqli_stmt_execute($stmt);
+     mysqli_stmt_close($stmt);
+    return true;
+}
+
+function getPermission($conn, $permission) {
+    if (isset($_SESSION['roleId']) && !empty($_SESSION['roleId'])) {
+        $query = "SELECT `permission` FROM `permission` JOIN `role_permission` on `permission`.`id`=`role_permission`.`permissionId` WHERE `role_permission`.`roleId`= '" . $_SESSION['roleId'] . "';";
+        $status = false;
+        $result = mysqli_query($conn, $query);
+
+        $allPermissions = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $allPermissions[] = $row['permission'];
+        }
+        
+
+        if (!in_array($permission, $allPermissions)) {
+            header("location: dashboard.php");
+            exit;
+        }
+    } else {
+        header("location: ../../../login-page/login.php");
+        exit;
+    }
+}
+
+function dbConnect(){
+    $serverName = "localhost";
+    $dbUserName = "root";
+    $dbPassword = "";
+    $dbName = "pharmacy";
+    // Create connection
+    $conn = mysqli_connect($serverName, $dbUserName, $dbPassword, $dbName);
+    // Check connection
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    return $conn;
 }
 
 

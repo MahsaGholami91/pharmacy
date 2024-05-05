@@ -2,6 +2,14 @@
 
 require_once "../includes/db.php";
 require_once "../includes/function2.php";
+    if(!empty($_GET['logout']) && isset($_SESSION['username'])) {
+        $_SESSION = '';
+        session_destroy();
+        header("location: ../../login-page/login.php");
+        exit;
+    } 
+
+
 if(isset($_POST["submit"])) {
     
     $_SESSION['error-msg'] = "";
@@ -23,44 +31,80 @@ if(isset($_POST["submit"])) {
             exit();
         }
     } else {
-            $_SESSION['error-msg'] = "*something was wrong, user not found!";
-            header("location: ../../login-page/login.php");
-            exit();
-        }
+        $_SESSION['error-msg'] = "*something was wrong, user not found!";
+        header("location: ../../login-page/login.php");
+        exit();
     }
-    
-    if($_SESSION['roleId']==1){
-        headerLayout();
-        menuItem();
-        dashboard();
-        footerLayout();
-
-        if(isset($_GET['page']) == "pages-add-Text.php"){
-            addTextForm(); 
-        }elseif(isset($_GET['page']) == "pages-add-user.php"){
-            addUserForm(); 
-        }elseif(isset($_GET['page']) == "pages-add-drug.php"){
-            addDrugForm(); 
-        }
-        
-    }elseif($_SESSION['roleId']==2){
-        headerLayout();
-        menuItem();
-        dashboard();
-        footerLayout();
-
-        
-    }elseif($_SESSION['roleId']==3){
-        
-        headerLayout();
-        menuItem();
-        dashboard();
-        footerLayout();
-
-        if(isset($_GET['page']) == "pages-add-Text.php"){
-            addTextForm(); 
-        }
-    
-        footerLayout();
 }
+
+    if(isset($_SESSION['roleId'])){
+        if($_SESSION['roleId'] ==1 ){
+            headerLayout();
+            menuItem();
+            if(isset($_GET['menu'])){
+    
+                if( $_GET['menu'] == "pages-add-Text.php"){
+                    addTextForm(); 
+                }elseif($_GET['menu'] == "pages-add-user.php"){
+                    addUserForm(); 
+                }elseif($_GET['menu'] == "pages-add-drug.php"){
+                    addDrugForm(); 
+                }elseif($_GET['menu'] == "pages-drug-list.php"){
+                    drugListForm(); 
+                }elseif($_GET['menu'] == "pages-update-drug.php"){
+                    updateDrugForm(); 
+                }else{
+                    dashboard();
+    
+                }
+            }else {
+                dashboard();
+    
+            }
+            footerLayout();
+    
+        }elseif($_SESSION['roleId']==2){
+            headerLayout();
+            menuItem();
+            if(isset($_GET['menu'])){
+    
+               if($_GET['menu'] == "pages-add-drug.php"){
+                    addDrugForm(); 
+                }elseif($_GET['menu'] == "pages-drug-list.php"){
+                    drugListForm(); 
+                }elseif($_GET['menu'] == "pages-update-drug.php"){
+                    updateDrugForm(); 
+                }else{
+                    dashboard();
+    
+                }
+            }else {
+                dashboard();
+    
+            }
+            footerLayout();
+    
+    
+            
+        }elseif($_SESSION['roleId']==3){
+            
+            headerLayout();
+            menuItem();
+            if(isset($_GET['menu'])){
+    
+                if( $_GET['menu'] == "pages-add-Text.php"){
+                    addTextForm(); 
+                }else{
+                    dashboard();
+    
+                }
+            }else {
+                dashboard();
+    
+            }
+            footerLayout();
+    
+    }
+
+    }
 ?>
